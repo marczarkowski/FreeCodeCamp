@@ -1,76 +1,81 @@
 body {
-    background: #9cdbb7;
-    padding: 50px;
-    font-family: Lato;
+  background: #9cdbb7;
+  padding: 50px;
+  font-family: Lato;
 }
 
 .calculator {
-    padding: 19px 0 17px 0;
-    border-radius: 6px;
-    margin: 0 auto;
-    max-width: 400px;
-    height: 635px;
-    background: #35323e;
-    box-shadow: 4px 6px 13px -4px rgba(0,0,0,0.75),
+  padding: 19px 0 17px 0;
+  border-radius: 6px;
+  margin: 0 auto;
+  max-width: 400px;
+  min-width: 340px;
+  height: 635px;
+  background: #35323e;
+  box-shadow: 4px 6px 13px -4px rgba(0,0,0,0.75),
     inset 0px 0px 13px 8px rgba(42,39,49,1);
 }
 .keypad {
-    margin: inherit;
+  margin: inherit;
 }
 
 .key {
-    font-weight: 900;
-    text-align: center;
-    line-height: 60px;
-    font-size: 30px;
-    float: left;
-    height: 60px;
-    width: 18.375%;
-    background: #f3f3f3;
-    margin-right: 3.5%;
-    margin-bottom: 3.5%;
-    box-shadow: inset 0px 0px 18px 6px rgba(222,218,222,1);
+  font-weight: 900;
+  text-align: center;
+  line-height: 60px;
+  font-size: 30px;
+  float: left;
+  height: 60px;
+  width: 18.375%;
+  background: #f3f3f3;
+  margin-right: 3.5%;
+  margin-bottom: 3.5%;
+  box-shadow: inset 0px 0px 18px 6px rgba(222,218,222,1);
 
 }
 
 .brow > .key:first-child {
-    margin-left: 8%;
+  margin-left: 8%;
 }
 
 .brow > .key:last-child {
-    margin-right: 4.5%;
+  margin-right: 4.5%;
 }
 
 .screen {
-    font-size: 24px;
-    border-radius: inherit;
-    text-align: right;
-    margin: 8%;
-    height: 22.5%;
-    background: #c0d1bf;
-    box-shadow: inset 0px 0px 13px 14px rgba(174,189,173,1);
+  font-size: 24px;
+  border-radius: inherit;
+  text-align: right;
+  margin: 8%;
+  height: 22.5%;
+  background: #c0d1bf;
+  box-shadow: inset 0px 0px 13px 14px rgba(174,189,173,1);
 
 }
 div > p {
-    font-size: 14px;
-    color: #f3f3f3;
-    text-align: center;
-    margin: 0;
+  font-size: 14px;
+  color: #f3f3f3;
+  text-align: center;
+  margin: 0;
 }
 .activerow, .memoryrow {
-    width: inherit;
-    margin: 0 8px;
-    padding-top: 25px;
-    padding-bottom: 10px;
+  width: inherit;
+  margin: 0 8px;
+  padding-top: 25px;
+  padding-bottom: 10px;
 }
 .activerow {
-    vertical-align: bottom;
-    height: 70%;
-    font-size: 50px;
+  vertical-align: bottom;
+  height: 70%;
+  font-size: 50px;
 }
 
 .memoryrow {
-    height: 30%;
-    line-height: 30%;
-    font-size: 16px;
+  height: 30%;
+  line-height: 30%;
+  font-size: 16px;
+}
+.squareroot {  
+text-shadow: 1px 0 #35323e;
+letter-spacing:1px;
 }

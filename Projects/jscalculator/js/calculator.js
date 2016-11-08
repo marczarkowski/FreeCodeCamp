@@ -1,4 +1,5 @@
-// dodaj obsluge zamiany kropek na przecinki
+// napraw błąd z dodawaniem negatywnych wartości w czasie chaina
+
 $(document).ready(function() {
     var currentOperation = undefined;
     var singleNumberOperation = false;
@@ -9,26 +10,24 @@ $(document).ready(function() {
     var appendToMemory = true;
     var previousTarget = undefined;
 
-    function accessActiveRow(method, arg) {
-        if (arg != undefined) {
-            arg = String(arg);
-            arg.replace(".", ",");
+    function accessActiveRow(method, value) {
+        if (value !== undefined && value % 1 !== 0) {
+            value = String(value).replace(".", ",").substring(0, 5);
         }
-        if (method === "text" && arg != undefined) {
-            return $(".activerow").text(arg);
+        if (method === "text" && value != undefined) {
+            return $(".activerow").text(value);
         } else if (method === "text") {
             return $(".activerow").text();
-        } else if (method === "append" && arg != undefined) {
-            return $(".activerow").append(arg);
+        } else if (method === "append" && value != undefined) {
+            return $(".activerow").append(value);
         } else if (method === "clean") {
             $(".activerow").text("");
         }
     }
 
     function accessMemoryRow(method, state, value) {
-        if (value != undefined) {
-            value = String(value);
-            value.replace(".", ",");
+        if (value !== undefined && value % 1 !== 0) {
+            value = String(value).replace(".", ",")
         }
         if (method === "append" && value != undefined && state == true) {
             return $(".memoryrow").append(value);
@@ -44,9 +43,12 @@ $(document).ready(function() {
     function getDoubleValue() {
         var value = undefined;
         var textValue = accessActiveRow("text");
-        if (textValue != undefined && textValue.trim().length > 0) {
-            console.log("swag");
+        if (textValue.trim().length > 0) {
             value = Number(textValue.replace(",", "."));
+        } else {
+            value = 0;
+            accessActiveRow("text", value);
+            eraseBefore = true;
         }
         return value;
     }
@@ -107,9 +109,7 @@ $(document).ready(function() {
             accessMemoryRow("text", true, (accessMemoryRow("text").substring(0, accessMemoryRow("text").length - 1) + currentOperation));
             return;
         }
-        if (accessActiveRow("text") !== "") {
-            pressedOperation($(this).text().trim());
-        }
+        pressedOperation($(this).text().trim());
         previousTarget = $(this);
     });
     $(".equals").click(function() {
@@ -132,5 +132,21 @@ $(document).ready(function() {
     });
     $(".clearentry").click(function() {
         accessActiveRow("clean");
+    });
+    $(".plusminus").click(function() {
+        var value = accessActiveRow("text");
+        if (value !== "") {
+            if (value > 0) {
+                accessActiveRow("text", -Math.abs(Number(value)));
+            } else {
+                accessActiveRow("text", Math.abs(Number(value)));
+            }
+        }
+    });
+    $(".inverse").click(function() {
+        var value = accessActiveRow("text");
+        if (value !== "") {
+            accessActiveRow("text", (1 / value));
+        }
     });
 });
