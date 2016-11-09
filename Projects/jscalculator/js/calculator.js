@@ -1,4 +1,4 @@
-// napraw błąd z dodawaniem negatywnych wartości w czasie chaina
+'use strict';
 
 $(document).ready(function() {
     var currentOperation = undefined;
@@ -10,51 +10,48 @@ $(document).ready(function() {
     var appendToMemory = true;
     var previousTarget = undefined;
 
-    function accessActiveRow(method, value) {
-        if (value !== undefined && value % 1 !== 0) {
-            value = String(value).replace(".", ",").substring(0, 5);
+    function accessRow(row, method, value, state) {
+        if (value !== undefined && value % 1 !== 0 && !isNaN(value)) {
+            value = String(value).replace(".", ",").substring(0, 6);
         }
-        if (method === "text" && value != undefined) {
-            return $(".activerow").text(value);
-        } else if (method === "text") {
-            return $(".activerow").text();
-        } else if (method === "append" && value != undefined) {
-            return $(".activerow").append(value);
-        } else if (method === "clean") {
-            $(".activerow").text("");
-        }
-    }
-
-    function accessMemoryRow(method, state, value) {
-        if (value !== undefined && value % 1 !== 0) {
-            value = String(value).replace(".", ",")
-        }
-        if (method === "append" && value != undefined && state == true) {
-            return $(".memoryrow").append(value);
-        } else if (method === "clean") {
-            $(".memoryrow").text("");
+        if (method === "clean") {
+            $("." + row).text("");
         } else if (method === "text" && value != undefined) {
-            return $(".memoryrow").text(value);
+            return $("." + row).text(value);
         } else if (method === "text") {
-            return $(".memoryrow").text();
+            return $("." + row).text();
+        } else if (row === "memoryrow" && method === "append" && value != undefined && state == true) {
+            $("." + row).append(value);
+            if (accessRow("memoryrow", "text").length > 30) {
+                accessRow("memoryrow", "text", ("<<" + accessRow("memoryrow", "text").substring(accessRow("memoryrow", "text").length - 28)));
+            }
+        } else if (row === "activerow" && method === "append" && value != undefined) {
+            return $("." + row).append(value);
         }
     }
 
     function getDoubleValue() {
         var value = undefined;
-        var textValue = accessActiveRow("text");
+        var textValue = accessRow("activerow", "text");
         if (textValue.trim().length > 0) {
             value = Number(textValue.replace(",", "."));
         } else {
             value = 0;
-            accessActiveRow("text", value);
+            accessRow("activerow", "text", value);
             eraseBefore = true;
         }
         return value;
     }
 
     function calculate(x, currentOperation, equals) {
-        var y = getDoubleValue();
+        var y = undefined;
+        if ($(previousTarget).hasClass("equals")) {
+            x = getDoubleValue();
+            y = accessRow("memoryrow", "text");
+            y = Number(y.substring(y.lastIndexOf(currentOperation), y.lastIndexOf("=")));
+        } else {
+            y = getDoubleValue();
+        }
         var operations = {
             '+': function(x, y) {
                 return x + y
@@ -69,16 +66,18 @@ $(document).ready(function() {
                 return x * y
             }
         }
-        if (equals === true) {
-            accessMemoryRow("append", true, (`${y} =`))
+        if ($(previousTarget).hasClass("equals")) {
+            accessRow("memoryrow", "append", (x + currentOperation + y + "="), true)
+        } else if (equals === true ) {
+            accessRow("memoryrow", "append", (y + "="), true)
         }
         x = operations[currentOperation](x, y);
-        accessActiveRow("text", x);
-    };
+        accessRow("activerow", "text", x);
+    }
 
     function pressedOperation(operation) {
         if (chainCalculation) {
-            accessMemoryRow("append", appendToMemory, (accessActiveRow("text") + currentOperation));
+            accessRow("memoryrow", "append", (accessRow("activerow", "text") + currentOperation), appendToMemory);
             appendToMemory = !appendToMemory;
             calculate(x, currentOperation);
             chainCalculation = false;
@@ -88,35 +87,38 @@ $(document).ready(function() {
             x = getDoubleValue();
             currentOperation = operation;
             chainCalculation = true;
-            accessMemoryRow("append", appendToMemory, (accessActiveRow("text") + currentOperation));
+            accessRow("memoryrow", "append", (accessRow("activerow", "text") + currentOperation), appendToMemory);
             appendToMemory = true;
-            previousTarget = $(this);
         }
         eraseBefore = true;
     }
     $(".number").click(function() {
         if (eraseBefore) {
-            accessActiveRow("text", $(this).text().trim());
+            accessRow("activerow", "text", $(this).text().trim());
             eraseBefore = false;
         } else {
-            accessActiveRow("append", $(this).text().trim());
+            accessRow("activerow", "append", $(this).text().trim());
+        }
+        if (accessRow("activerow", "text").length > 8) {
+            eraseBefore = true;
+            return;
         }
         previousTarget = undefined;
     });
     $(".operation").click(function() {
         if ($(previousTarget).hasClass("operation")) {
             currentOperation = $(this).text().trim();
-            accessMemoryRow("text", true, (accessMemoryRow("text").substring(0, accessMemoryRow("text").length - 1) + currentOperation));
+            accessRow("memoryrow", "text", (accessRow("memoryrow", "text").substring(0, accessRow("memoryrow", "text").length - 1) + currentOperation), true);
             return;
         }
         pressedOperation($(this).text().trim());
         previousTarget = $(this);
     });
     $(".equals").click(function() {
-        previousTarget = undefined;
         x = calculate(x, currentOperation, true);
         chainCalculation = false;
         eraseBefore = true;
+        previousTarget = $(this);
     });
     $(".clear").click(function() {
         currentOperation = undefined;
@@ -127,26 +129,26 @@ $(document).ready(function() {
         eraseBefore = false;
         appendToMemory = true;
         previousTarget = undefined;
-        accessActiveRow("clean");
-        accessMemoryRow("clean");
+        accessRow("activerow", "clean");
+        accessRow("memoryrow", "clean");
     });
     $(".clearentry").click(function() {
-        accessActiveRow("clean");
+        accessRow("activerow", "clean");
     });
     $(".plusminus").click(function() {
-        var value = accessActiveRow("text");
+        var value = accessRow("activerow", "text");
         if (value !== "") {
             if (value > 0) {
-                accessActiveRow("text", -Math.abs(Number(value)));
+                accessRow("activerow", "text", -Math.abs(Number(value)));
             } else {
-                accessActiveRow("text", Math.abs(Number(value)));
+                accessRow("activerow", "text", Math.abs(Number(value)));
             }
         }
     });
     $(".inverse").click(function() {
-        var value = accessActiveRow("text");
+        var value = accessRow("activerow", "text");
         if (value !== "") {
-            accessActiveRow("text", (1 / value));
+            accessRow("activerow", "text", (1 / value));
         }
     });
 });
