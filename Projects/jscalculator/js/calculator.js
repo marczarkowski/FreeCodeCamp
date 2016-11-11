@@ -77,17 +77,17 @@ $(document).ready(function() {
 
     function pressedOperation(operation) {
         if (chainCalculation) {
-            accessRow("memoryrow", "append", (accessRow("activerow", "text") + currentOperation), appendToMemory);
+            accessRow("memoryrow", "append", (accessRow("activerow", "text") + operation), appendToMemory);
             appendToMemory = !appendToMemory;
             calculate(x, currentOperation);
             chainCalculation = false;
-            lastOperation = currentOperation;
+            lastOperation = operation;
             pressedOperation(lastOperation);
         } else {
             x = getDoubleValue();
             currentOperation = operation;
             chainCalculation = true;
-            accessRow("memoryrow", "append", (accessRow("activerow", "text") + currentOperation), appendToMemory);
+            accessRow("memoryrow", "append", (accessRow("activerow", "text") + operation), appendToMemory);
             appendToMemory = true;
         }
         eraseBefore = true;
@@ -146,8 +146,10 @@ $(document).ready(function() {
         }
     });
     $(".inverse").click(function() {
-        var value = accessRow("activerow", "text");
-        if (value !== "") {
+        var value = getDoubleValue();
+        if (value < 1) {
+            accessRow("activerow", "text", (Math.round(1 / value)));
+        } else if (value > 1) {
             accessRow("activerow", "text", (1 / value));
         }
     });
