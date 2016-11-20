@@ -17,13 +17,32 @@ function makeFriendlyDates(arr) {
         }
         return element;
     }
+
     let removeRedundant = (element, index, array) => {
-        if (index === 2 && (element === "2016" && (array[5] - element < 1 || (array[5] - element == 1 && (months.indexOf(array[1]) < months.indexOf(array[4]) || (array[1] === array[4] && array[0].substring(0, array[0].search(/\D/)) < array[3].substring(0, array[3].search(/\D/)))))))) {
+        let checkYears = () =>  (array[5] - array[2] <= 1);
+        let checkMonths = () => (months.indexOf(array[1]) > months.indexOf(array[4]));
+        let checkDays = () => (array[1] === array[4] && (array[0].substring(0, array[0].search(/\D/)) < array[3].substring(0, array[3].search(/\D/))));
+        if ((index === 2 && element === "2016" && (checkYears() && checkMonths() || checkDays())) || (index === 5 && checkYears() || (checkMonths() || checkDays()))) {
+            console.log(element, index, array)
             return "";
         }
         return element;
     }
     date = date.map(transformDayMonth).map(removeRedundant);
     console.log(date);
+    return date;
 }
-makeFriendlyDates(["2016-12-01", "2017-11-01"])
+makeFriendlyDates(["2016-12-01", "2017-02-03"]);
+console.log(`Oczekiwany wynik: ["December 1st","February 3rd"].`);
+makeFriendlyDates(["2016-07-01", "2016-07-04"]);
+console.log(`Oczekiwany wynik: ["July 1st","4th"].`);
+makeFriendlyDates(["2016-12-01", "2018-02-03"]);
+console.log(`Oczekiwany wynik: ["December 1st, 2016","February 3rd, 2018"].`);
+makeFriendlyDates(["2017-03-01", "2017-05-05"]);
+console.log(`Oczekiwany wynik: ["March 1st, 2017","May 5th"].`);
+makeFriendlyDates(["2018-01-13", "2018-01-13"]);
+console.log(`Oczekiwany wynik: ["January 13th, 2018"].`);
+makeFriendlyDates(["2022-09-05", "2023-09-04"]);
+console.log(`Oczekiwany wynik: ["September 5th, 2022","September 4th"].`);
+makeFriendlyDates(["2022-09-05", "2023-09-05"]);
+console.log(`Oczekiwany wynik:["September 5th, 2022","September 5th, 2023"].`);
