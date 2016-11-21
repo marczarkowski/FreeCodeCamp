@@ -19,16 +19,33 @@ function makeFriendlyDates(arr) {
     }
 
     let removeRedundant = (element, index, array) => {
-        let checkYears = () =>  (array[5] - array[2] <= 1);
-        let checkMonths = () => (months.indexOf(array[1]) > months.indexOf(array[4]));
+        let checkYears = () =>  (array[5] - array[2] < 1);
+        let checkMonths = () => (array[5] - array[2] == 1 && months.indexOf(array[1]) > months.indexOf(array[4]));
         let checkDays = () => (array[1] === array[4] && (array[0].substring(0, array[0].search(/\D/)) < array[3].substring(0, array[3].search(/\D/))));
-        if ((index === 2 && element === "2016" && (checkYears() && checkMonths() || checkDays())) || (index === 5 && checkYears() || (checkMonths() || checkDays()))) {
-            console.log(element, index, array)
-            return "";
+        if ((index === 2 && element === "2016" && (checkYears() || checkMonths() || checkDays()))) {
+            return;
+        } else if (index === 5 && (checkYears() || (checkMonths() || checkDays()))) {
+            return;
+        } else if (index === 4 && checkYears() && array[4] === array[1]) {
+            return;
+        } else if (index === 3 && checkYears() && array[4] === array[1] && array[0] === array[3]) {
+            return;
         }
         return element;
     }
+
+    let transformToFriendly = (array) => {
+        let transformed = [];
+        transformed.push(`${array[1]} ${array[0]}`);
+        if (array[2] !== '') {
+            transformed[0] = `${transformed[0]}, ${array[2]}`
+        }
+        console.log(transformed);
+
+        return transformed;
+    }
     date = date.map(transformDayMonth).map(removeRedundant);
+    // date = transformToFriendly(date);
     console.log(date);
     return date;
 }
