@@ -6,9 +6,7 @@ function makeFriendlyDates(arr) {
     let date = arr[0].split('-').reverse().concat(arr[1].split("-").reverse());
     let transformDayMonth = (element, index) => {
         let days = ["1st", "2nd", "3rd", "th"];
-        if (element.indexOf("0") === 0) {
-            element = element.substring(1);
-        }
+        element = Number(element);
         if (index === 1 || index === 4) {
             return months[Number(element - 1)];
         } else if (index === 0 || index === 3) {
