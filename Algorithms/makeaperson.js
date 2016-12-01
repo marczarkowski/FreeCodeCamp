@@ -1,18 +1,19 @@
 /**
  * Created by Marcin on 30.11.2016.
  */
-let Person = function(firstAndLast) {
+var Person = function(firstAndLast) {
+    var name - firstAndLast;
     this.getFirstName = function() {
-        return this.name.substring(0, this.name.indexOf(" "));
+        return name.substring(0, name.indexOf(" "));
     }; this.getLastName = function() {
-        return this.name.substring(this.name.indexOf(" ") + 1);
+        return name.substring(name.indexOf(" ") + 1);
     }; this.getFullName = function() {
-        return this.name;
+        return name;
     }; this.setFirstName = function(first) {
-        this.name = `${first} ${this.getLastName()}`;
+        name = first + " " + getLastName();
     }; this.setLastName = function(last) {
-        this.name = `${this.getFirstName()}  ${last}`;
+        name = getFirstName() + last;
     }; this.setFullName = function(firstAndLast) {
-        this.name = firstAndLast;
+        name = firstAndLast;
     };
 }
