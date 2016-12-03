@@ -17,3 +17,5 @@ var Person = function(firstAndLast) {
         name = firstAndLast;
     };
 }
+let bob = new Person("Bob Ross");
+console.log(Object.keys(bob))
