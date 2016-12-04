@@ -1,0 +1,17 @@
+/* http://materialuicolors.co/?ref=flatuicolors.com https://www.materialpalette.com/blue/orange */
+body {
+    background: #1976D2;
+}
+#header {
+    padding-top: 12.5%;
+    font-size: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: 'Lato', serif;
+    color: white;
+}
+#search {
+    border: 10px solid black;
+    min-height: 100px;
+    min-width: 100px;
+}
