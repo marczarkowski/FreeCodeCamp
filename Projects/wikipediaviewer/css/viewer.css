@@ -4,11 +4,10 @@ body {
     height: 100%;
     min-height: 100%;
     margin: 0;
-    padding: 0;
+    padding: 7.5% 0 7.5% 0;
     color: white;
 }
 #header {
-    padding-top: 12.5%;
     font-size: 2.5vw;
     white-space: nowrap;
     overflow: hidden;
@@ -32,9 +31,38 @@ input {
 .fa-search {
     color: #FF9800;
 }
+.rectBox {
+    margin-top: 2%;
+    margin-left: -16%;
+    margin-right: -16%;
+}
 .rect {
-    margin: 10px;
+    margin: 15px 0 15px 0;
     background: white;
-    min-width: 100px;
-    min-height: 100px;
+    min-width: 24.27vh;
+    min-height: 15vh;
+}
+.top-left {
+    border-radius: 20px 0 0 0;
+}
+.top-right {
+    border-radius: 0 20px 0 0;
+}
+.bottom-left {
+    border-radius: 0 0 0 20px;
+}
+.bottom-right {
+    border-radius: 0 0 20px 0;
+}
+.line {
+    display: inline-block;
+    margin-left: 3%;
+    width: 91%;
+    height: 2px;
+    background-color: #FF9800;
+}
+.title {
+    display: block;
+    padding: 13px;
+    color: black;
 }
