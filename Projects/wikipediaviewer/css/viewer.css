@@ -29,42 +29,12 @@ input {
     text-indent: 1.1vw;
     float: left;
 }
-.magnifying-glass {
-    display: inline-block;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    width: 0.0675em;
-    height: 0.0675em;
-    position: relative;
-    border: 0.016875em solid #FF9800;
-    -webkit-border-radius: 0.35em;
-    border-radius: 0.35em;
-    font: normal 10em/normal Arial, Helvetica, sans-serif;
-    color: rgba(0,0,0,1);
-    -o-text-overflow: clip;
-    text-overflow: clip;
-    max-height: 100%;
+.fa-search {
+    color: #FF9800;
 }
-
-.magnifying-glass::before {
-    display: inline-block;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    width: 0.0759325em;
-    height: 0.015875em;
-    position: absolute;
-    content: "";
-    right: -0.0590625em;
-    bottom: -0.03375em;
-    border: none;
-    font: normal 100%/normal Arial, Helvetica, sans-serif;
-    color: rgba(0,0,0,1);
-    -o-text-overflow: clip;
-    text-overflow: clip;
-    background: #FF9800;
-    text-shadow: none;
-    -webkit-transform: rotateZ(45deg)   ;
-    transform: rotateZ(45deg)   ;
+.rect {
+    margin: 10px;
+    background: white;
+    min-width: 100px;
+    min-height: 100px;
 }
