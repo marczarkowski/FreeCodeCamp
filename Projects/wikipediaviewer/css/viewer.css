@@ -24,7 +24,7 @@ body {
 input {
     background-color: transparent;
     border: none;
-    min-width: 90%;
+    min-width: 92%;
     text-indent: 1.1vw;
     float: left;
 }
@@ -55,14 +55,29 @@ input {
     border-radius: 0 0 20px 0;
 }
 .line {
-    display: inline-block;
-    margin-left: 3%;
+    display: block;
+    margin-left: 4%;
     width: 91%;
     height: 2px;
     background-color: #FF9800;
 }
 .title {
+    font-size: 1.6em;
+    font-family: 'Lato', sans;
     display: block;
-    padding: 13px;
     color: black;
+    position: relative;
+    margin-left: 4%;
+    padding-top: 1.5%;
+    padding-bottom: 0.5%;
+}
+.description {
+    color: black;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    margin-left: 4%;
+    margin-right: 5%;
+    display: inline-block;
+    text-align: justify;
+    text-justify: auto;
 }
