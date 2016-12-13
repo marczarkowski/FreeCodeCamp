@@ -24,12 +24,17 @@ body {
 input {
     background-color: transparent;
     border: none;
-    min-width: 92%;
+    min-width: 89%;
     text-indent: 1.1vw;
     float: left;
 }
-.fa-search {
+.fa {
     color: #FF9800;
+    float: left;
+}
+.fa-random {
+    margin-top: 0.4%;
+    margin-left: 0.7%;
 }
 .rectBox {
     margin-top: 2%;
