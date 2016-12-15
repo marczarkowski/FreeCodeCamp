@@ -8,6 +8,12 @@ $(document).ready(function () {
             getData();
         }
     });
+    $(".rect").on('mouseenter', function(){
+            $(this).animate({ margin: -10, width: "-=20", height: "-=20" });
+        });
+    $(".rect").on('mouseleave', function(){
+        $(this).animate({ margin: 0, width: "+=20", height: "+=20" });
+    });
 });
 
 function getData() {
@@ -20,15 +26,14 @@ function getData() {
             titles[index].innerHTML = outcome["title"];
             description[index].innerHTML = outcome["extract"];
         });
-        let maxHeight = 0;
-        $(".rect").each(function () {
-            let thisH = $(this).height();
-            if (thisH > maxHeight) {
-                maxHeight = thisH;
-            }
-        });
-        $(".rect").height(maxHeight);
-
+        // let maxHeight = 0;
+        // $(".rect").each(function () {
+        //     let thisH = $(this).height();
+        //     if (thisH > maxHeight) {
+        //         maxHeight = thisH;
+        //     }
+        // });
+        // $(".rect").height(maxHeight);
         $(".rectBox").show();
     });
 
