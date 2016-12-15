@@ -3,12 +3,12 @@ body {
     background: #1976D2;
     height: 100%;
     margin: 0;
-    padding: 7.5% 0 7.5% 0;
     color: white;
     min-width: 400px;
 }
 
 #header {
+    padding-top: 7.5%;
     word-wrap: break-word;
     white-space: normal;
     max-width: inherit;
@@ -65,9 +65,10 @@ input {
 
 .rectBox {
     display: none;
-    margin-top: 2%;
+    margin-top: 10px;
     margin-left: -16%;
     margin-right: -16%;
+    margin-bottom: 100px;
 }
 
 .rect {
@@ -130,8 +131,25 @@ a:hover {
     text-justify: auto;
 }
 
-#author {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -1em;
+}
+
+#author, .push {
+    clear: both;
+    display: block;
+    position: relative;
+    height: 10px;
+    margin-bottom: -30px;
 }
