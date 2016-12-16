@@ -1,0 +1,10 @@
+* {
+    background-color: #4DD0E1;
+    height: 100%;
+    width: 100%;
+}
+.circle {
+    background-color: #FF5722;
+    height: 100px;
+    width: 100px;
+}
