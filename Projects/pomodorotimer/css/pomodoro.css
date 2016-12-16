@@ -23,15 +23,20 @@ html, body {
     margin: 20px auto 0 auto;
     Font-family: "Open Sans", sans-serif;
 }
-.timers {
+.timerHeaders {
     padding-top: 65px;
     text-align: center;
 }
-.session {
+.sessionHeader {
     padding-right: 140px;
 }
-.session, .break {
+.sessionHeader, .breakHeader {
     display: inline;
+}
+.input {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
 }
 
 #author {
