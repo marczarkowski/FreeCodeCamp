@@ -1,5 +1,5 @@
-* {
-    background-color: #4DD0E1;
+html, body {
+    background-color: #00BCD4;
     height: 100%;
     width: 100%;
 }
@@ -7,4 +7,34 @@
     background-color: #FF5722;
     height: 100px;
     width: 100px;
+}
+.header {
+    margin-top: 7.5%;
+    font-size: 34px;
+    font-family: "Lato", sans-serif;
+    color: white;
+}
+
+.interface {
+    width: 450px;
+    height: 550px;
+    background-color: #FFFFFF;
+    border-radius: 13px;
+    margin: 20px auto 0 auto;
+    Font-family: "Open Sans", sans-serif;
+}
+.timers {
+    padding-top: 65px;
+    text-align: center;
+}
+.session {
+    padding-right: 140px;
+}
+.session, .break {
+    display: inline;
+}
+
+#author {
+    color: white;
+    margin: 5% 0 1% 0;
 }
