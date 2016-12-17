@@ -27,17 +27,24 @@ html, body {
     padding-top: 65px;
     text-align: center;
 }
+.timeValues {
+    padding-top: 4px;
+    text-align: center;
+    font-size: 24px;
+
+}
 .sessionHeader {
     padding-right: 140px;
 }
-.sessionHeader, .breakHeader {
+
+.sessionHeader, .breakHeader, .sessionTime, .breakTime {
     display: inline;
 }
-.input {
-    text-align: center;
-    display: block;
-    margin: 0 auto;
+
+.sessionTime {
+    padding-right: 166.5px;
 }
+
 
 #author {
     color: white;
