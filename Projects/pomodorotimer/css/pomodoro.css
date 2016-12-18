@@ -9,7 +9,7 @@ html, body {
     width: 100px;
 }
 .header {
-    margin-top: 7.5%;
+    margin-top: 4.5%;
     font-size: 34px;
     font-family: "Lato", sans-serif;
     color: white;
@@ -22,14 +22,13 @@ html, body {
     border-radius: 13px;
     margin: 20px auto 0 auto;
     Font-family: "Open Sans", sans-serif;
+    text-align: center;
 }
 .timerHeaders {
     padding-top: 65px;
-    text-align: center;
 }
-.timeValues {
+.timerValues {
     padding-top: 4px;
-    text-align: center;
     font-size: 24px;
 
 }
@@ -37,15 +36,66 @@ html, body {
     padding-right: 140px;
 }
 
-.sessionHeader, .breakHeader, .sessionTime, .breakTime {
+.sessionHeader, .breakHeader, .sessionManagement, .breakManagement {
     display: inline;
 }
 
-.sessionTime {
-    padding-right: 166.5px;
+.sessionManagement {
+    padding-right: 160.5px;
+}
+.timeAdd, .timeSubtract {
+    cursor: pointer;
 }
 
+.timeSubtract {
+    color: #00BCD4;
+}
+.timeAdd {
+    color: #FF5722;
+}
+.timeShieldWrapper {
+    height: 270px;
+    width: 270px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+.timeShieldCircle {
+    height: 250px;
+    width: 250px;
+    border: 10px solid black;
+    border-radius: 50%;
+}
+.single10 {
+    height: 270px;
+    width: 270px;
+    border: 8px solid #A2DED0;
+    border-radius: 50%;
+    position: relative;
+    -webkit-animation: single10anim 60s infinite linear;
+    animation: single10anim 60s infinite linear;
+}
 
+.single10:before {
+    content: '';
+    height: 13px;
+    width: 13px;
+    border-radius: 50%;
+    background-color: #16A085;
+    position: absolute;
+    top: 5px;
+    left: 120px;
+}
+
+@-webkit-keyframes single10anim {
+    100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes single10anim {
+    100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+.timeLeft {
+    margin-top: -186.44px;
+    font-size: 60px;
+}
 #author {
     color: white;
     margin: 5% 0 1% 0;
