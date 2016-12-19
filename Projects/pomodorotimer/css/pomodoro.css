@@ -15,7 +15,7 @@ html, body {
     width: 100px;
 }
 .header {
-    margin-top: 4.5%;
+    margin-top: 3.5%;
     font-size: 34px;
     font-family: "Lato", sans-serif;
     color: white;
@@ -39,16 +39,28 @@ html, body {
 
 }
 .sessionHeader {
-    padding-right: 140px;
+    padding-right: 70px;
+}
+.breakHeader {
+    padding-left: 70px;
 }
 
 .sessionHeader, .breakHeader, .sessionManagement, .breakManagement {
     display: inline;
 }
 
-.sessionManagement {
-    padding-right: 166.5px;
+.sessionManagement, .breakManagement {
+    position: relative;
 }
+
+.sessionManagement {
+    left: -82px;
+}
+
+.breakManagement {
+    left: 88px;
+}
+
 .timeAdd, .timeSubtract {
     display: inline-block;
     cursor: pointer;
@@ -124,6 +136,12 @@ html, body {
     background-color: #00BCD4;
     border-color: #00BCD4;
 }
+.btn-success:hover, .btn-success:focus {
+    background-color: #0099d4;
+    border-color: #0099d4;
+    outline: none;
+}
+
 #author {
     color: white;
     margin: 1% 0 1% 0;
