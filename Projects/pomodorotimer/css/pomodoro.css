@@ -3,6 +3,12 @@ html, body {
     height: 100%;
     width: 100%;
 }
+.interface {
+    box-shadow: 0px 0px 18px 1px #242424;
+    -webkit-box-shadow: 0px 0px 18px 1px #242424;
+    -moz-box-shadow: 0px 0px 18px 1px #242424;
+    -o-box-shadow: 0px 0px 18px 1px #242424;
+}
 .circle {
     background-color: #FF5722;
     height: 100px;
@@ -41,17 +47,28 @@ html, body {
 }
 
 .sessionManagement {
-    padding-right: 160.5px;
+    padding-right: 166.5px;
 }
 .timeAdd, .timeSubtract {
+    display: inline-block;
     cursor: pointer;
+    height: 11px;
+    width: 11px;
+    vertical-align: middle;
+    margin-bottom: 4px;
 }
 
 .timeSubtract {
-    color: #00BCD4;
+    background-color: #00BCD4;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+
 }
 .timeAdd {
-    color: #FF5722;
+    background-color: #FF5722;
+    display: inline-block;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 .timeShieldWrapper {
     height: 270px;
