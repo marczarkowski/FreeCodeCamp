@@ -38,14 +38,17 @@ html, body {
     display: inline;
     position: relative;
 }
+
 .sessionHeader, .sessionManagement {
     margin-left: 41.5px;
 }
+
 .breakHeader, .breakManagement {
     margin-right: 41.5px;
 }
 
-.timeAdd, .timeSubtract {
+.sliders {
+    background-color: #00BCD4;
     display: inline-block;
     cursor: pointer;
     height: 11px;
@@ -54,16 +57,13 @@ html, body {
     margin-bottom: 4px;
 }
 
-.timeSubtract {
-    background-color: #00BCD4;
+.timerSubtract {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 
 }
 
-.timeAdd {
-    background-color: #FF5722;
-    display: inline-block;
+.timerAdd {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
@@ -82,18 +82,18 @@ html, body {
     border-radius: 50%;
 }
 
-.single10 {
+.progressCircle {
     height: 270px;
     width: 270px;
     border: 8px solid #00cfd4;
-    opacity: 0.5;
+    opacity: 0.8;
     border-radius: 50%;
     position: relative;
     -webkit-animation: single10anim 60s infinite linear;
     animation: single10anim 60s infinite linear;
 }
 
-.single10:before {
+.progressCircle:before {
     content: '';
     height: 13px;
     width: 13px;
@@ -145,4 +145,3 @@ html, body {
     color: white;
     margin: 1% 0 1% 0;
 }
-/* odleglosc od headerow do gornego brzegu containera 65px, a buttony 63px*/
