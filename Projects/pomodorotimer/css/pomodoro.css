@@ -86,11 +86,10 @@ html, body {
     height: 270px;
     width: 270px;
     border: 8px solid #00cfd4;
-    opacity: 0.8;
     border-radius: 50%;
     position: relative;
-    -webkit-animation: single10anim 60s infinite linear;
-    animation: single10anim 60s infinite linear;
+    /*-webkit-animation: single10anim 60s infinite linear;*/
+    /*animation: single10anim 60s infinite linear;*/
 }
 
 .progressCircle:before {
@@ -99,7 +98,6 @@ html, body {
     width: 13px;
     border-radius: 50%;
     background-color: #00BCD4;
-    opacity: 1;
     position: absolute;
     top: 5px;
     left: 120px;
@@ -130,15 +128,9 @@ html, body {
     width: 84px;
 }
 
-.btn-success {
-    background-color: #00BCD4;
-    border-color: #00BCD4;
-}
-
-.btn-success:hover, .btn-success:focus {
-    background-color: #0099d4;
-    border-color: #0099d4;
+.btn-play,.btn-play:hover, .btn-play:focus {
     outline: none;
+    color: white;
 }
 
 #author {
