@@ -88,8 +88,17 @@ html, body {
     border: 8px solid #00cfd4;
     border-radius: 50%;
     position: relative;
-    /*-webkit-animation: single10anim 60s infinite linear;*/
-    /*animation: single10anim 60s infinite linear;*/
+    /*-webkit-animation: single10anim 60s infinite linear !important;*/
+    /*animation: single10anim 60s infinite linear !important;*/
+}
+.progressCircleNoAnimation {
+    height: 270px;
+    width: 270px;
+    border: 8px solid #00cfd4;
+    border-radius: 50%;
+    position: relative;
+    -webkit-animation: none !important;
+    animation: none !important;
 }
 
 .progressCircle:before {
