@@ -55,11 +55,8 @@ function startSession() {
             secondsLeft = "59";
         } else {
             secondsLeft = secondsLeft - 1;
-            if (String(secondsLeft).length < 2) {
-                secondsLeft = "0" + secondsLeft;
-            }
         }
-        timeLeft.innerHTML = `${minutesLeft}:${secondsLeft}`;
+        timeLeft.innerHTML = formatTime(minutesLeft, secondsLeft);
         if (secondsLeft == "00") {
             clearInterval(minutesInterval);
             clearInterval(secondsInterval);
@@ -95,11 +92,26 @@ function modifyTime(slider) {
                 currentTime.innerHTML = Number(currentTime.innerHTML) + 1;
             }
         }
-    })
+    });
+    $(".timeLeft").text(formatTime(currentTime.innerHTML, null));
+}
+function formatTime(minutes, seconds) {
+    "use strict";
+    var args = Array.prototype.slice.call(arguments);
+    args.forEach(function(arg, index, array) {
+        if (arg == null || arg == undefined) {
+            array[index] = "00";
+        } else if (String(arg).length < 2) {
+            array[index] = `0${arg}`;
+        }
+
+    });
+    return `${args[0]}:${args[1]}`;
+
 }
 $(document).ready(function () {
     "use strict";
-    $(".timeLeft").text(`${$(".sessionTime").text().trim()}:00`);
+    $(".timeLeft").text(formatTime($('.sessionTime').text(), null));
     let orangeTheme = new Theme("#FF5722");
     orangeTheme.active();
     $(".btn-play").click(startSession);
