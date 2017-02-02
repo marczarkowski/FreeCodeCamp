@@ -3,7 +3,7 @@
  kolor trybu active: main: #00BCD4 bar: #00cfd4;
  kolor trybu break: main: #FF5722 bar: #ff5a26
  tryb wpływa na kolor przycisku play, pozostalego czasu, baru, kropki, tła
- do zrobienia: przetwarzanie czasu, dodanie dzwieków
+ do zrobienia: napraw interwały
  */
 let body = document.body;
 let sliders = document.getElementsByClassName("sliders");
@@ -39,17 +39,17 @@ class Theme {
 
 }
 function startSession() {
-    let minutesLeft = timeLeft.innerHTML.substring(0, timeLeft.innerHTML.indexOf(':'));
-    let secondsLeft = timeLeft.innerHTML.substring(timeLeft.innerHTML.indexOf(':') + 1);
-    let minutesInterval;
-    let secondsInterval;
+    let timeLeftObj = {
+        minutesLeft: timeLeft.innerHTML.substring(0, timeLeft.innerHTML.indexOf(':')),
+        secondsLeft: timeLeft.innerHTML.substring(timeLeft.innerHTML.indexOf(':') + 1)
+    };
 
-    manageInterval(minutesInterval, decreaseTimeLeft, minutesLeft, 60000);
-    manageInterval(secondsInterval, decreaseTimeLeft, secondsLeft, 1000);
+    let minutesInterval = setInterval(decreaseTimeLeft(timeLeftObj, "minutesLeft"), 60000);
+    let secondsInterval = setInterval(decreaseTimeLeft(timeLeftObj, "secondsLeft"), 1000);
     enableDotAnimation();
 
-    timeLeft.innerHTML = formatTime(minutesLeft, secondsLeft);
-    if (minutesLeft == "00" && secondsLeft == "00") {
+    timeLeft.innerHTML = formatTime(timeLeftObj["minutesLeft"], timeLeftObj["secondsLeft"]);
+    if (timeLeftObj["minutesLeft"] == "00" && timeLeftObj["secondsLeft"] == "00") {
             clearInterval(minutesInterval);
             clearInterval(secondsInterval);
             disableDotAnimation();
@@ -57,8 +57,8 @@ function startSession() {
     }
 
     function enableDotAnimation() {
-        pomodoroCss.insertRule(`.progressCircle { -webkit-animation: single10anim ${minutesLeft * 60}s infinite linear !important; }`, pomodoroCss.rules.length);
-        pomodoroCss.insertRule(`.progressCircle { animation: single10anim ${minutesLeft * 60}s infinite linear !important; }`, pomodoroCss.rules.length);
+        pomodoroCss.insertRule(`.progressCircle { -webkit-animation: single10anim ${timeLeftObj["minutesLeft"] * 60}s infinite linear !important; }`, pomodoroCss.rules.length);
+        pomodoroCss.insertRule(`.progressCircle { animation: single10anim ${timeLeftObj["minutesLeft"] * 60}s infinite linear !important; }`, pomodoroCss.rules.length);
     }
 
     function disableDotAnimation() {
@@ -66,18 +66,14 @@ function startSession() {
     }
 
 }
-function manageInterval(intervalId, func, arg, delay) {
+
+function decreaseTimeLeft(timeLeft, timeUnit) {
     "use strict";
-    intervalId = setInterval(func(arg), delay);
-}
-function decreaseTimeLeft(timeUnit) {
-    "use strict";
-    if (timeUnit == "00") {
-        timeUnit = "59";
+    if (timeLeft[timeUnit] == "00" && timeUnit == "secondsLeft") {
+        timeLeft[timeUnit] = "59";
     } else {
-        timeUnit = timeUnit - 1;
+        timeLeft[timeUnit] = timeLeft[timeUnit] - 1;
     }
-    return timeUnit;
 }
 function modifyTime(slider) {
     "use strict";
