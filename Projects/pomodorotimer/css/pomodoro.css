@@ -137,8 +137,8 @@ html, body {
     width: 84px;
 }
 
-.btn-play,.btn-play:hover, .btn-play:focus {
-    outline: none;
+.btn,.btn:hover, .btn:focus {
+    outline: none !important;
     color: white;
 }
 
