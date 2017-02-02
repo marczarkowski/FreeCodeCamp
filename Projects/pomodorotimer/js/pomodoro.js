@@ -27,7 +27,7 @@ class Theme {
         [].forEach.call(sliders, function (slider) {
             slider.style.backgroundColor = shadeColor(mainColor, 0.2);
         });
-        pomodoroCss.addRule(".sliders:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`)
+        pomodoroCss.addRule(".sliders:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
         progressCircle.style.borderColor = mainColor;
         pomodoroCss.addRule(".progressCircle:before", "background-color: " + mainColor);
         timeLeft.style.color = mainColor;
@@ -41,27 +41,19 @@ class Theme {
 function startSession() {
     let minutesLeft = timeLeft.innerHTML.substring(0, timeLeft.innerHTML.indexOf(':'));
     let secondsLeft = timeLeft.innerHTML.substring(timeLeft.innerHTML.indexOf(':') + 1);
+    let minutesInterval;
+    let secondsInterval;
 
-    function decreaseMinutesLeft() {
-        minutesLeft = minutesLeft - 1;
-        minutesLeft = "0" + String(minutesLeft);
-        timeLeft.innerHTML = `${minutesLeft}:${secondsLeft}`;
-    }
+    manageInterval(minutesInterval, decreaseTimeLeft, minutesLeft, 60000);
+    manageInterval(secondsInterval, decreaseTimeLeft, secondsLeft, 1000);
+    enableDotAnimation();
 
-    function decreaseSecondsLeft() {
-        let minutesLeft = timeLeft.innerHTML.substring(0, timeLeft.innerHTML.indexOf(':'));
-        let secondsLeft = timeLeft.innerHTML.substring(timeLeft.innerHTML.indexOf(':') + 1);
-        if (secondsLeft == "00") {
-            secondsLeft = "59";
-        } else {
-            secondsLeft = secondsLeft - 1;
-        }
-        timeLeft.innerHTML = formatTime(minutesLeft, secondsLeft);
-        if (secondsLeft == "00") {
+    timeLeft.innerHTML = formatTime(minutesLeft, secondsLeft);
+    if (minutesLeft == "00" && secondsLeft == "00") {
             clearInterval(minutesInterval);
             clearInterval(secondsInterval);
             disableDotAnimation();
-        }
+
     }
 
     function enableDotAnimation() {
@@ -72,13 +64,21 @@ function startSession() {
     function disableDotAnimation() {
         pomodoroCss.insertRule(`.progressCircle { -webkit-animation: none !important; animation: none !important; }`, pomodoroCss.rules.length);
     }
-    enableDotAnimation();
-    decreaseMinutesLeft();
-    decreaseSecondsLeft();
-    let minutesInterval = setInterval(decreaseMinutesLeft, 60000);
-    let secondsInterval = setInterval(decreaseSecondsLeft, 1000);
-}
 
+}
+function manageInterval(intervalId, func, arg, delay) {
+    "use strict";
+    intervalId = setInterval(func(arg), delay);
+}
+function decreaseTimeLeft(timeUnit) {
+    "use strict";
+    if (timeUnit == "00") {
+        timeUnit = "59";
+    } else {
+        timeUnit = timeUnit - 1;
+    }
+    return timeUnit;
+}
 function modifyTime(slider) {
     "use strict";
     let timer = Array.prototype.slice.call(this.parentNode.childNodes);
