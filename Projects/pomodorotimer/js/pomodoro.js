@@ -7,14 +7,18 @@
 "use strict";
 let body = document.body;
 let sliders = document.getElementsByClassName("sliders");
-let pomodoroTimer = Array.prototype.slice.call(sliders[0].parentNode.childNodes);
-let breakTimer = Array.prototype.slice.call(sliders[2].parentNode.childNodes);
+let pomodoroObj = [
+    Array.prototype.slice.call(sliders[0].parentNode.childNodes),
+    new Event("pomodoroExpired")
+];
+let breakObj = [
+   Array.prototype.slice.call(sliders[2].parentNode.childNodes),
+   new Event("breakExpired")
+];
 let progressCircle = document.querySelector(".progressCircle");
 let timeLeftDisplay = document.querySelector(".timeLeftDisplay");
 let playButton = document.querySelector(".btn-play");
 let pomodoroCss = document.styleSheets[2];
-let pomodoroExpired = new Event("pomodoroExpired");
-let breakExpired = new Event("breakExpired");
 let shadeColor = function (color, percent) {
   let f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
   return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
@@ -25,17 +29,17 @@ $(document).ready(function () {
   let orangeTheme = new Theme("#FF5722");
   let blueTheme = new Theme("#00BCD4");
   let greenTheme = new Theme ("#4CAF50");
-  greenTheme.active();
   document.addEventListener("pomodoroExpired", function (e) {
-    console.log(`${e} triggered`);
     blueTheme.active();
   }, false);
+  greenTheme.active();
+
   $(".timeLeftDisplay").text(formatTime($('.pomodoroTime').text(), null));
   $(".sliders").click(modifyTimeWithSlider);
   $(".buttons").on("click", ".btn-play", function () {
     let thisBtn = $(this);
     orangeTheme.active();
-    startNextRound(pomodoroTimer);
+    startNextRound(pomodoroObj);
     toggleActionButton(thisBtn);
   });
 });
@@ -65,10 +69,11 @@ class Theme {
 }
 
 // two types of round: Pomodoro and Break
-function startNextRound(roundTimer) {
-  let currentSetTime = document.querySelector(`.${roundTimer[3].className}`);
+function startNextRound(roundObject) {
+  let currentSetTime = document.querySelector(`.${roundObject[0][3].className}`);
   let minutesLeft = `0${currentSetTime.innerHTML}`;
   let secondsLeft = "00";
+  let roundExpirationEvent = roundObject[1];
   decreaseMinutesLeft();
   decreaseSecondsLeft();
   enableDotAnimation();
@@ -98,16 +103,15 @@ function startNextRound(roundTimer) {
     }
     timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
     secondsLeft = timeLeftDisplay.innerHTML.substring(timeLeftDisplay.innerHTML.indexOf(':') + 1);
-    checkTimeExpiration();
+    checkTimeExpiration(roundExpirationEvent);
   }
 
-  function checkTimeExpiration() {
+  function checkTimeExpiration(expirationEvent) {
     if (minutesLeft == "00" && secondsLeft == "00") {
       clearInterval(minutesInterval);
       clearInterval(secondsInterval);
       disableDotAnimation();
-      document.dispatchEvent(pomodoroExpired);
-      startNextRound(breakTimer);
+      document.dispatchEvent(expirationEvent);
     }
   }
 }
