@@ -34,12 +34,12 @@ html, body {
     font-size: 24px;
 }
 
-.sessionHeader, .breakHeader, .sessionManagement, .breakManagement {
+.pomodoroHeader, .breakHeader, .pomodoroManagement, .breakManagement {
     display: inline;
     position: relative;
 }
 
-.sessionHeader, .sessionManagement {
+.pomodoroHeader, .pomodoroManagement {
     margin-left: 41.5px;
 }
 
@@ -126,7 +126,7 @@ html, body {
     }
 }
 
-.timeLeft {
+.timeLeftDisplay {
     margin-top: -186.44px;
     font-size: 60px;
     color: #00BCD4;

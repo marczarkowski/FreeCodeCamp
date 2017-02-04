@@ -2,30 +2,40 @@
  kolor trybu inactive: #BDBDBD
  kolor trybu active: main: #00BCD4 bar: #00cfd4;
  kolor trybu break: main: #FF5722 bar: #ff5a26
- tryb wpływa na kolor przycisku play, pozostalego czasu, baru, kropki, tła
- do zrobienia: napraw interwały
+ do zrobionia: eventy dla końca pomodoro i końca breaka, obsługa pauzy, dźwięki
  */
 "use strict";
 let body = document.body;
 let sliders = document.getElementsByClassName("sliders");
+let pomodoroTimer = Array.prototype.slice.call(sliders[0].parentNode.childNodes);
+let breakTimer = Array.prototype.slice.call(sliders[2].parentNode.childNodes);
 let progressCircle = document.querySelector(".progressCircle");
-let timeLeft = document.querySelector(".timeLeft");
+let timeLeftDisplay = document.querySelector(".timeLeftDisplay");
 let playButton = document.querySelector(".btn-play");
 let pomodoroCss = document.styleSheets[2];
+let pomodoroExpired = new Event("pomodoroExpired");
+let breakExpired = new Event("breakExpired");
 let shadeColor = function (color, percent) {
   let f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
   return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
 };
 
+
 $(document).ready(function () {
-  "use strict";
-  $(".timeLeft").text(formatTime($('.sessionTime').text(), null));
   let orangeTheme = new Theme("#FF5722");
-  orangeTheme.active();
+  let blueTheme = new Theme("#00BCD4");
+  let greenTheme = new Theme ("#4CAF50");
+  greenTheme.active();
+  document.addEventListener("pomodoroExpired", function (e) {
+    console.log(`${e} triggered`);
+    blueTheme.active();
+  }, false);
+  $(".timeLeftDisplay").text(formatTime($('.pomodoroTime').text(), null));
   $(".sliders").click(modifyTimeWithSlider);
-  $(".buttons").on("click", ".btn-play", function() {
+  $(".buttons").on("click", ".btn-play", function () {
     let thisBtn = $(this);
-    startSession();
+    orangeTheme.active();
+    startNextRound(pomodoroTimer);
     toggleActionButton(thisBtn);
   });
 });
@@ -45,7 +55,7 @@ class Theme {
     pomodoroCss.addRule(".sliders:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
     progressCircle.style.borderColor = mainColor;
     pomodoroCss.addRule(".progressCircle:before", "background-color: " + mainColor);
-    timeLeft.style.color = mainColor;
+    timeLeftDisplay.style.color = mainColor;
     playButton.style.backgroundColor = shadeColor(mainColor, 0.2);
     playButton.style.borderColor = shadeColor(mainColor, 0.2);
     pomodoroCss.addRule(".btn-play:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
@@ -53,9 +63,12 @@ class Theme {
   }
 
 }
-function startSession() {
-  let minutesLeft = timeLeft.innerHTML.substring(0, timeLeft.innerHTML.indexOf(':'));
-  let secondsLeft = timeLeft.innerHTML.substring(timeLeft.innerHTML.indexOf(':') + 1);
+
+// two types of round: Pomodoro and Break
+function startNextRound(roundTimer) {
+  let currentSetTime = document.querySelector(`.${roundTimer[3].className}`);
+  let minutesLeft = `0${currentSetTime.innerHTML}`;
+  let secondsLeft = "00";
   decreaseMinutesLeft();
   decreaseSecondsLeft();
   enableDotAnimation();
@@ -63,8 +76,8 @@ function startSession() {
   let secondsInterval = setInterval(decreaseSecondsLeft, 1000);
 
   function enableDotAnimation() {
-    pomodoroCss.insertRule(`.progressCircle { -webkit-animation: single10anim ${calculateTimeLeftInSeconds()}s infinite linear !important; }`, pomodoroCss.rules.length);
-    pomodoroCss.insertRule(`.progressCircle { animation: single10anim ${calculateTimeLeftInSeconds()}s infinite linear !important; }`, pomodoroCss.rules.length);
+    pomodoroCss.insertRule(`.progressCircle { -webkit-animation: single10anim 60s infinite linear !important; }`, pomodoroCss.rules.length);
+    pomodoroCss.insertRule(`.progressCircle { animation: single10anim 60s infinite linear !important; }`, pomodoroCss.rules.length);
   }
 
   function disableDotAnimation() {
@@ -73,8 +86,8 @@ function startSession() {
 
   function decreaseMinutesLeft() {
     minutesLeft = minutesLeft - 1;
-    timeLeft.innerHTML = formatTime(minutesLeft, secondsLeft);
-    minutesLeft = timeLeft.innerHTML.substring(0, timeLeft.innerHTML.indexOf(':'));
+    timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
+    minutesLeft = timeLeftDisplay.innerHTML.substring(0, timeLeftDisplay.innerHTML.indexOf(':'));
   }
 
   function decreaseSecondsLeft() {
@@ -83,8 +96,8 @@ function startSession() {
     } else {
       secondsLeft = secondsLeft - 1;
     }
-    timeLeft.innerHTML = formatTime(minutesLeft, secondsLeft);
-    secondsLeft = timeLeft.innerHTML.substring(timeLeft.innerHTML.indexOf(':') + 1);
+    timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
+    secondsLeft = timeLeftDisplay.innerHTML.substring(timeLeftDisplay.innerHTML.indexOf(':') + 1);
     checkTimeExpiration();
   }
 
@@ -93,11 +106,9 @@ function startSession() {
       clearInterval(minutesInterval);
       clearInterval(secondsInterval);
       disableDotAnimation();
-
+      document.dispatchEvent(pomodoroExpired);
+      startNextRound(breakTimer);
     }
-  }
-  function calculateTimeLeftInSeconds() {
-    return (minutesLeft * 60) + secondsLeft;
   }
 }
 function formatTime(minutes, seconds) {
@@ -126,7 +137,7 @@ function modifyTimeWithSlider(slider) {
       }
     }
   });
-  $(".timeLeft").text(formatTime(currentTime.innerHTML, null));
+  $(".timeLeftDisplay").text(formatTime(currentTime.innerHTML, null));
 }
 function toggleActionButton(btn) {
   if (btn.hasClass("btn-play")) {
