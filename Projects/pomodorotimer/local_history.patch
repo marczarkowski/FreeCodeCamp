@@ -1,0 +1,52 @@
+Index: js/pomodoro.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- js/pomodoro.js	(revision )
++++ js/pomodoro.js	(revision )
+@@ -2,17 +2,17 @@
+  kolor trybu inactive: #BDBDBD
+  kolor trybu active: main: #00BCD4 bar: #00cfd4;
+  kolor trybu break: main: #FF5722 bar: #ff5a26
+- do zrobionia: obsługa pauzy, dźwięki
++ do zrobionia: eventy dla końca pomodoro i końca breaka, obsługa pauzy, dźwięki
+  */
+ "use strict";
+ let body = document.body;
+ let sliders = document.getElementsByClassName("sliders");
+ let pomodoroObj = [
+-    document.querySelector(Array.prototype.slice.call(sliders[0].parentNode.childNodes)[3].className), // amount of time set with Pomodoro time slider
++    Array.prototype.slice.call(sliders[0].parentNode.childNodes),
+     new Event("pomodoroExpired")
+ ];
+ let breakObj = [
+-  document.querySelector(Array.prototype.slice.call(sliders[2].parentNode.childNodes)[3].className), // amount of time set with Break time slider
++   Array.prototype.slice.call(sliders[2].parentNode.childNodes),
+    new Event("breakExpired")
+ ];
+ let progressCircle = document.querySelector(".progressCircle");
+@@ -29,7 +29,7 @@
+   let orangeTheme = new Theme("#FF5722");
+   let blueTheme = new Theme("#00BCD4");
+   let greenTheme = new Theme ("#4CAF50");
+-
++  
+   document.addEventListener("pomodoroExpired", function (e) {
+     startNextRound(breakObj);
+     blueTheme.active();
+@@ -77,11 +77,9 @@
+ 
+ // two types of round: Pomodoro and Break
+ function startNextRound(roundObject) {
+-  if (roundObject[0].length < 2) {
+-    roundObject[0] = `0${roundObject[0]}:00`;
+-  }
+-  let minutesLeft = roundObject[0].substring(0, 2);
+-  let secondsLeft = roundObject[0].substring(3, 0);
++  let currentSetTime = document.querySelector(`.${roundObject[0][3].className}`);
++  let minutesLeft = `0${currentSetTime.innerHTML}`;
++  let secondsLeft = "00";
+   let roundExpirationEvent = roundObject[1];
+   decreaseMinutesLeft();
+   decreaseSecondsLeft();

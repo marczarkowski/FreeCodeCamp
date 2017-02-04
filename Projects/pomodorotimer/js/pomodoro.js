@@ -8,11 +8,11 @@
 let body = document.body;
 let sliders = document.getElementsByClassName("sliders");
 let pomodoroObj = [
-    Array.prototype.slice.call(sliders[0].parentNode.childNodes),
+    Array.prototype.slice.call(sliders[0].parentNode.childNodes)[3].className,
     new Event("pomodoroExpired")
 ];
 let breakObj = [
-   Array.prototype.slice.call(sliders[2].parentNode.childNodes),
+   Array.prototype.slice.call(sliders[2].parentNode.childNodes)[3].className,
    new Event("breakExpired")
 ];
 let progressCircle = document.querySelector(".progressCircle");
@@ -29,9 +29,16 @@ $(document).ready(function () {
   let orangeTheme = new Theme("#FF5722");
   let blueTheme = new Theme("#00BCD4");
   let greenTheme = new Theme ("#4CAF50");
+  
   document.addEventListener("pomodoroExpired", function (e) {
+    startNextRound(breakObj);
     blueTheme.active();
   }, false);
+  document.addEventListener("breakExpired", function (e) {
+    greenTheme.active();
+    toggleActionButton($(".btn-warning"));
+  }, false);
+
   greenTheme.active();
 
   $(".timeLeftDisplay").text(formatTime($('.pomodoroTime').text(), null));
@@ -70,9 +77,12 @@ class Theme {
 
 // two types of round: Pomodoro and Break
 function startNextRound(roundObject) {
-  let currentSetTime = document.querySelector(`.${roundObject[0][3].className}`);
-  let minutesLeft = `0${currentSetTime.innerHTML}`;
-  let secondsLeft = "00";
+  let currentSetTime = document.querySelector(`.${roundObject[0]}`);
+  if (currentSetTime.innerHTML.length < 2) {
+    currentSetTime = `0${currentSetTime.innerHTML}:00`;
+  }
+  let minutesLeft = currentSetTime.substring(0, 2);
+  let secondsLeft = currentSetTime.substring(3);
   let roundExpirationEvent = roundObject[1];
   decreaseMinutesLeft();
   decreaseSecondsLeft();
