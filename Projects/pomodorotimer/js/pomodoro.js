@@ -7,14 +7,6 @@
 "use strict";
 let body = document.body;
 let sliders = document.getElementsByClassName("sliders");
-let pomodoroObj = [
-    Array.prototype.slice.call(sliders[0].parentNode.childNodes)[3].className,
-    new Event("pomodoroExpired")
-];
-let breakObj = [
-   Array.prototype.slice.call(sliders[2].parentNode.childNodes)[3].className,
-   new Event("breakExpired")
-];
 let progressCircle = document.querySelector(".progressCircle");
 let timeLeftDisplay = document.querySelector(".timeLeftDisplay");
 let playButton = document.querySelector(".btn-play");
@@ -23,8 +15,17 @@ let shadeColor = function (color, percent) {
   let f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
   return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
 };
-
-
+let pomodoroObj = [
+  Array.prototype.slice.call(sliders[0].parentNode.childNodes)[3].className,
+  new Event("pomodoroExpired")
+];
+let breakObj = [
+  Array.prototype.slice.call(sliders[2].parentNode.childNodes)[3].className,
+  new Event("breakExpired")
+];
+let pauseObj = [
+  "timeLeftDisplay",
+];
 $(document).ready(function () {
   let orangeTheme = new Theme("#FF5722");
   let blueTheme = new Theme("#00BCD4");
@@ -77,12 +78,12 @@ class Theme {
 
 // two types of round: Pomodoro and Break
 function startNextRound(roundObject) {
-  let currentSetTime = document.querySelector(`.${roundObject[0]}`);
-  if (currentSetTime.innerHTML.length < 2) {
-    currentSetTime = `0${currentSetTime.innerHTML}:00`;
+  let roundSetTime = document.querySelector(`.${roundObject[0]}`).innerHTML;
+  if (roundSetTime.length <= 2) {
+    roundSetTime = formatTime(roundSetTime, null);
   }
-  let minutesLeft = currentSetTime.substring(0, 2);
-  let secondsLeft = currentSetTime.substring(3);
+  let minutesLeft = roundSetTime.substring(0, 2);
+  let secondsLeft = roundSetTime.substring(3);
   let roundExpirationEvent = roundObject[1];
   decreaseMinutesLeft();
   decreaseSecondsLeft();
