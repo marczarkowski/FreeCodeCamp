@@ -5,6 +5,7 @@
  tryb wpływa na kolor przycisku play, pozostalego czasu, baru, kropki, tła
  do zrobienia: napraw interwały
  */
+"use strict";
 let body = document.body;
 let sliders = document.getElementsByClassName("sliders");
 let progressCircle = document.querySelector(".progressCircle");
@@ -15,6 +16,20 @@ let shadeColor = function (color, percent) {
   let f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
   return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
 };
+
+$(document).ready(function () {
+  "use strict";
+  $(".timeLeft").text(formatTime($('.sessionTime').text(), null));
+  let orangeTheme = new Theme("#FF5722");
+  orangeTheme.active();
+  $(".sliders").click(modifyTimeWithSlider);
+  $(".buttons").on("click", ".btn-play", function() {
+    let thisBtn = $(this);
+    startSession();
+    toggleActionButton(thisBtn);
+  });
+});
+
 
 class Theme {
   constructor(mainColor) {
@@ -41,15 +56,15 @@ class Theme {
 function startSession() {
   let minutesLeft = timeLeft.innerHTML.substring(0, timeLeft.innerHTML.indexOf(':'));
   let secondsLeft = timeLeft.innerHTML.substring(timeLeft.innerHTML.indexOf(':') + 1);
+  decreaseMinutesLeft();
+  decreaseSecondsLeft();
   enableDotAnimation();
-  decreaseMinutesLeft()
-  decreaseSecondsLeft()
   let minutesInterval = setInterval(decreaseMinutesLeft, 60000);
   let secondsInterval = setInterval(decreaseSecondsLeft, 1000);
 
   function enableDotAnimation() {
-    pomodoroCss.insertRule(`.progressCircle { -webkit-animation: single10anim ${minutesLeft * 60}s infinite linear !important; }`, pomodoroCss.rules.length);
-    pomodoroCss.insertRule(`.progressCircle { animation: single10anim ${minutesLeft * 60}s infinite linear !important; }`, pomodoroCss.rules.length);
+    pomodoroCss.insertRule(`.progressCircle { -webkit-animation: single10anim ${calculateTimeLeftInSeconds()}s infinite linear !important; }`, pomodoroCss.rules.length);
+    pomodoroCss.insertRule(`.progressCircle { animation: single10anim ${calculateTimeLeftInSeconds()}s infinite linear !important; }`, pomodoroCss.rules.length);
   }
 
   function disableDotAnimation() {
@@ -70,10 +85,10 @@ function startSession() {
     }
     timeLeft.innerHTML = formatTime(minutesLeft, secondsLeft);
     secondsLeft = timeLeft.innerHTML.substring(timeLeft.innerHTML.indexOf(':') + 1);
-    checkTime();
+    checkTimeExpiration();
   }
 
-  function checkTime() {
+  function checkTimeExpiration() {
     if (minutesLeft == "00" && secondsLeft == "00") {
       clearInterval(minutesInterval);
       clearInterval(secondsInterval);
@@ -81,10 +96,12 @@ function startSession() {
 
     }
   }
+  function calculateTimeLeftInSeconds() {
+    return (minutesLeft * 60) + secondsLeft;
+  }
 }
 function formatTime(minutes, seconds) {
-  "use strict";
-  var args = Array.prototype.slice.call(arguments);
+  let args = Array.prototype.slice.call(arguments);
   args.forEach(function (arg, index, array) {
     if (arg == null || arg == undefined) {
       array[index] = "00";
@@ -94,11 +111,9 @@ function formatTime(minutes, seconds) {
 
   });
   return `${args[0]}:${args[1]}`;
-
 }
 
-function modifyTime(slider) {
-  "use strict";
+function modifyTimeWithSlider(slider) {
   let timer = Array.prototype.slice.call(this.parentNode.childNodes);
   let clickedSlider = slider.target;
   let currentTime = document.querySelector(`.${timer[3].className}`);
@@ -113,20 +128,13 @@ function modifyTime(slider) {
   });
   $(".timeLeft").text(formatTime(currentTime.innerHTML, null));
 }
-function toggleActionButton() {
-  if ($(this).hasClass("btn-play")) {
-    $(this).removeClass("btn-play").toggleClass("btn-warning");
-    $(this).html("<i class=\"fa fa-pause\">");
+function toggleActionButton(btn) {
+  if (btn.hasClass("btn-play")) {
+    btn.removeClass("btn-play").toggleClass("btn-warning");
+    btn.html("<i class=\"fa fa-pause\">");
   } else {
-    $(this).removeClass("btn-warning").toggleClass("btn-play");
-    $(this).html("<i class=\"fa fa-play\">");
+    btn.removeClass("btn-warning").toggleClass("btn-play");
+    btn.html("<i class=\"fa fa-play\">");
   }
 }
-$(document).ready(function () {
-  "use strict";
-  $(".timeLeft").text(formatTime($('.sessionTime').text(), null));
-  let orangeTheme = new Theme("#FF5722");
-  orangeTheme.active();
-  $(".btn-play, .btn-warning").click(startSession).click(toggleActionButton);
-  $(".sliders").click(modifyTime);
-});
+
