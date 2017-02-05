@@ -37,6 +37,7 @@ html, body {
 .pomodoroHeader, .breakHeader, .pomodoroManagement, .breakManagement {
     display: inline;
     position: relative;
+    user-select: none;
 }
 
 .pomodoroHeader, .pomodoroManagement {

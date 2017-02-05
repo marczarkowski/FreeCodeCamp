@@ -1,76 +1,4 @@
-/* trzy tryby: inactive, work, break -
- kolor trybu inactive: #BDBDBD
- kolor trybu active: main: #00BCD4 bar: #00cfd4;
- kolor trybu break: main: #FF5722 bar: #ff5a26
- do zrobionia: eventy dla końca pomodoro i końca breaka, obsługa pauzy, dźwięki
- */
 "use strict";
-let body = document.body;
-let sliders = document.getElementsByClassName("sliders");
-let progressCircle = document.querySelector(".progressCircle");
-let timeLeftDisplay = document.querySelector(".timeLeftDisplay");
-let playButton = document.querySelector(".btn-play");
-let pomodoroCss = document.styleSheets[2];
-let shadeColor = function (color, percent) {
-  let f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
-  return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
-};
-let pomodoroObj = {
-    roundTime: Array.prototype.slice.call(sliders[0].parentNode.childNodes)[3].className,
-    event: new Event("pomodoroExpired"),
-    theme: new Theme("#FF5722")
-};
-let breakObj = {
-  roundTime: Array.prototype.slice.call(sliders[2].parentNode.childNodes)[3].className,
-  event: new Event("breakExpired"),
-  theme: new Theme("#00BCD4")
-};
-let pauseObj = {
-  roundTime: "timeLeftDisplay",
-  event: new Event("pomodoroExpired"),
-  theme: new Theme ("#BDBDBD"),
-  lastActiveRound: {}
-};
-$(document).ready(function () {
-  let defaultTheme = new Theme ("#4CAF50");
-  
-  document.addEventListener("pomodoroExpired", function (e) {
-    startNextRound(breakObj);
-    breakTheme.active();
-    pauseObj.lastRound = breakObj;
-  }, false);
-  document.addEventListener("breakExpired", function (e) {
-    defaultTheme.active();
-    toggleActionButton($(".btn-warning"));
-    pauseObj.lastRound = pomodoroObj;
-  }, false);
-
-  defaultTheme.active();
-
-  $(".timeLeftDisplay").text(formatTime($('.pomodoroTime').text(), null));
-  $(".sliders").click(modifyTimeWithSlider);
-  $(".buttons").on("click", ".btn-play", function () {
-    let thisBtn = $(this);
-    workTheme.active();
-    if (thisBtn.hasClass("afterPause")) {
-      startNextRound(pauseObj.lastRound);
-    } else {
-      startNextRound(pomodoroObj);
-    }
-    toggleActionButton(thisBtn);
-  });
-  $(".buttons").on("click", ".btn-warning", function () {
-    let thisBtn = $(this);
-    pauseTheme.active();
-    clearAllIntervals();
-    pomodoroCss.insertRule(`.progressCircle { -webkit-animation-play-state: paused !important;
-                                              animation-play-state: paused !important; }`, pomodoroCss.rules.length);
-    thisBtn.addClass("afterPause");
-    toggleActionButton(thisBtn);
-  })
-});
-
-
 class Theme {
   constructor(mainColor) {
     this.mainColor = mainColor;
@@ -82,20 +10,75 @@ class Theme {
     [].forEach.call(sliders, function (slider) {
       slider.style.backgroundColor = shadeColor(mainColor, 0.2);
     });
-    pomodoroCss.addRule(".sliders:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
+    pomodoroStylesheet.addRule(".sliders:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
     progressCircle.style.borderColor = mainColor;
-    pomodoroCss.addRule(".progressCircle:before", "background-color: " + mainColor);
+    pomodoroStylesheet.addRule(".progressCircle:before", "background-color: " + mainColor);
     timeLeftDisplay.style.color = mainColor;
     playButton.style.backgroundColor = shadeColor(mainColor, 0.2);
     playButton.style.borderColor = shadeColor(mainColor, 0.2);
-    pomodoroCss.addRule(".btn-play:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
-    pomodoroCss.addRule(".btn-play:focus", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
+    pomodoroStylesheet.addRule(".btn-play:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
+    pomodoroStylesheet.addRule(".btn-play:focus", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
   }
-
 }
+const body = document.body;
+const sliders = document.getElementsByClassName("sliders");
+const progressCircle = document.querySelector(".progressCircle");
+const timeLeftDisplay = document.querySelector(".timeLeftDisplay");
+const playButton = document.querySelector(".btn-play");
+const pomodoroStylesheet = document.styleSheets[2];
+const shadeColor = function (color, percent) {
+  let f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+  return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+};
+const defaultTheme = new Theme("#4CAF50");
 
-// two types of round: Pomodoro and Break
-function startNextRound(roundObject) {
+const pomodoroRound = {
+  roundTime: Array.prototype.slice.call(sliders[0].parentNode.childNodes)[3].className,
+  event: new Event("pomodoroExpired"),
+  theme: new Theme("#FF5722")
+};
+const breakRound = {
+  roundTime: Array.prototype.slice.call(sliders[2].parentNode.childNodes)[3].className,
+  event: new Event("breakExpired"),
+  theme: new Theme("#00BCD4")
+};
+let pauseRound = {
+  roundTime: "timeLeftDisplay",
+  event: new Event("pomodoroExpired"),
+  theme: new Theme("#BDBDBD"),
+  lastActiveRound: null
+};
+
+$(document).ready(function () {
+  defaultTheme.active();
+  $(".timeLeftDisplay").text(formatTime($('.pomodoroTime').text(), null));
+  $(".sliders").click(modifyTimeWithSlider);
+  $(".buttons").on("click", ".btn-play", function () {
+    let thisBtn = $(this);
+    if (thisBtn.hasClass("afterPause")) {
+      pauseRound.lastActiveRound.roundTime = "timeLeftDisplay";
+      activateRound(pauseRound.lastActiveRound);
+    } else {
+      activateRound(pomodoroRound);
+    }
+    toggleActionButton(thisBtn);
+  });
+  $(".buttons").on("click", ".btn-warning", function () {
+    let thisBtn = $(this);
+    pauseRound.theme.active();
+    clearAllIntervals();
+    pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation-play-state: paused !important;
+                                              animation-play-state: paused !important; }`, pomodoroStylesheet.rules.length);
+    thisBtn.addClass("afterPause");
+    if (pauseRound.lastActiveRound == null) {
+      pauseRound.lastActiveRound = pomodoroRound;
+    }
+    toggleActionButton(thisBtn);
+  })
+});
+
+function activateRound(roundObject) {
+  roundObject.theme.active();
   let roundSetTime = document.querySelector(`.${roundObject["roundTime"]}`).innerHTML;
   if (roundSetTime.length <= 2) {
     roundSetTime = formatTime(roundSetTime, null);
@@ -110,12 +93,12 @@ function startNextRound(roundObject) {
   let secondsInterval = window.setInterval(decreaseSecondsLeft, 1000);
 
   function enableDotAnimation() {
-    pomodoroCss.insertRule(`.progressCircle { -webkit-animation: single10anim 60s infinite linear !important; 
-                                              animation: single10anim 60s infinite linear !important; }`, pomodoroCss.rules.length);
+    pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation: single10anim 60s infinite linear !important; 
+                                              animation: single10anim 60s infinite linear !important; }`, pomodoroStylesheet.rules.length);
   }
 
   function disableDotAnimation() {
-    pomodoroCss.insertRule(`.progressCircle { -webkit-animation: none !important; animation: none !important; }`, pomodoroCss.rules.length);
+    pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation: none !important; animation: none !important; }`, pomodoroStylesheet.rules.length);
   }
 
   function decreaseMinutesLeft() {
@@ -123,7 +106,6 @@ function startNextRound(roundObject) {
       minutesLeft = minutesLeft - 1;
     }
     timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
-    minutesLeft = timeLeftDisplay.innerHTML.substring(0, timeLeftDisplay.innerHTML.indexOf(':'));
   }
 
   function decreaseSecondsLeft() {
@@ -133,7 +115,6 @@ function startNextRound(roundObject) {
       secondsLeft = secondsLeft - 1;
     }
     timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
-    secondsLeft = timeLeftDisplay.innerHTML.substring(timeLeftDisplay.innerHTML.indexOf(':') + 1);
     checkTimeExpiration(roundExpirationEvent);
   }
 
@@ -147,16 +128,16 @@ function startNextRound(roundObject) {
   }
 }
 function formatTime(minutes, seconds) {
-  let args = Array.prototype.slice.call(arguments);
-  args.forEach(function (arg, index, array) {
-    if (arg == null || arg == undefined) {
-      array[index] = "00";
-    } else if (String(arg).length < 2) {
-      array[index] = `0${arg}`;
+  let timeUnits = Array.prototype.slice.call(arguments);
+  timeUnits.forEach(function (unit, index, units) {
+    if (unit == null || unit == undefined) {
+      units[index] = "00";
+    } else if (String(unit).length < 2) {
+      units[index] = `0${unit}`;
     }
 
   });
-  return `${args[0]}:${args[1]}`;
+  return `${timeUnits[0]}:${timeUnits[1]}`;
 }
 
 function modifyTimeWithSlider(slider) {
@@ -174,6 +155,7 @@ function modifyTimeWithSlider(slider) {
   });
   $(".timeLeftDisplay").text(formatTime(currentTime.innerHTML, null));
 }
+
 function toggleActionButton(btn) {
   if (btn.hasClass("btn-play")) {
     btn.removeClass("btn-play").toggleClass("btn-warning");
@@ -188,3 +170,20 @@ function clearAllIntervals() {
     window.clearInterval(i);
   }
 }
+
+function setLastActiveRound(round) {
+  pauseRound.lastActiveRound = round;
+  pauseRound.lastActiveRound.roundTime = round.roundTime;
+}
+
+document.addEventListener("pomodoroExpired", function (e) {
+  setLastActiveRound(breakRound);
+  activateRound(breakRound);
+
+}, false);
+
+document.addEventListener("breakExpired", function (e) {
+  setLastActiveRound(breakRound);
+  defaultTheme.active();
+  toggleActionButton($(".btn-warning"));
+}, false);
