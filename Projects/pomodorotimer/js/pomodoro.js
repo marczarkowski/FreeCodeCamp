@@ -6,7 +6,7 @@ class Theme {
 
   active() {
     let mainColor = this.mainColor;
-    body.style.backgroundColor = mainColor;
+    document.body.style.backgroundColor = mainColor;
     [].forEach.call(sliders, function (slider) {
       slider.style.backgroundColor = shadeColor(mainColor, 0.2);
     });
@@ -14,17 +14,15 @@ class Theme {
     progressCircle.style.borderColor = mainColor;
     pomodoroStylesheet.addRule(".progressCircle:before", "background-color: " + mainColor);
     timeLeftDisplay.style.color = mainColor;
-    playButton.style.backgroundColor = shadeColor(mainColor, 0.2);
-    playButton.style.borderColor = shadeColor(mainColor, 0.2);
+    document.querySelector(".buttons > button").style.backgroundColor = shadeColor(mainColor, 0.2);
+    document.querySelector(".buttons > button").style.borderColor = shadeColor(mainColor, 0.2);
     pomodoroStylesheet.addRule(".btn-play:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
     pomodoroStylesheet.addRule(".btn-play:focus", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
   }
 }
-const body = document.body;
 const sliders = document.getElementsByClassName("sliders");
 const progressCircle = document.querySelector(".progressCircle");
 const timeLeftDisplay = document.querySelector(".timeLeftDisplay");
-const playButton = document.querySelector(".btn-play");
 const pomodoroStylesheet = document.styleSheets[2];
 const shadeColor = function (color, percent) {
   let f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
@@ -71,7 +69,7 @@ $(document).ready(function () {
                                               animation-play-state: paused !important; }`, pomodoroStylesheet.rules.length);
     thisBtn.addClass("afterPause");
     if (pauseRound.lastActiveRound == null) {
-      pauseRound.lastActiveRound = pomodoroRound;
+      setLastActiveRound();
     }
     toggleActionButton(thisBtn);
   })
@@ -89,8 +87,8 @@ function activateRound(roundObject) {
   decreaseMinutesLeft();
   decreaseSecondsLeft();
   enableDotAnimation();
-  let minutesInterval = window.setInterval(decreaseMinutesLeft, 60000);
-  let secondsInterval = window.setInterval(decreaseSecondsLeft, 1000);
+  const minutesInterval = window.setInterval(decreaseMinutesLeft, 60000);
+  const secondsInterval = window.setInterval(decreaseSecondsLeft, 1000);
 
   function enableDotAnimation() {
     pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation: single10anim 60s infinite linear !important; 
@@ -102,18 +100,14 @@ function activateRound(roundObject) {
   }
 
   function decreaseMinutesLeft() {
-    if (Number(minutesLeft) >= 1) {
+    if (Number(minutesLeft) >= 1 && secondsLeft == "00") {
       minutesLeft = minutesLeft - 1;
     }
     timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
   }
 
   function decreaseSecondsLeft() {
-    if (secondsLeft == "00") {
-      secondsLeft = "59";
-    } else {
-      secondsLeft = secondsLeft - 1;
-    }
+    secondsLeft = secondsLeft == "00" ? "59" : secondsLeft - 1;
     timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
     checkTimeExpiration(roundExpirationEvent);
   }
@@ -128,21 +122,20 @@ function activateRound(roundObject) {
   }
 }
 function formatTime(minutes, seconds) {
-  let timeUnits = Array.prototype.slice.call(arguments);
-  timeUnits.forEach(function (unit, index, units) {
+  let timeUnits = Array.prototype.slice.call(arguments).map((unit) => {
     if (unit == null || unit == undefined) {
-      units[index] = "00";
+      return "00";
     } else if (String(unit).length < 2) {
-      units[index] = `0${unit}`;
+      return `0${unit}`;
     }
-
+    return unit;
   });
   return `${timeUnits[0]}:${timeUnits[1]}`;
 }
 
 function modifyTimeWithSlider(slider) {
-  let timer = Array.prototype.slice.call(this.parentNode.childNodes);
-  let clickedSlider = slider.target;
+  const timer = Array.prototype.slice.call(this.parentNode.childNodes);
+  const clickedSlider = slider.target;
   let currentTime = document.querySelector(`.${timer[3].className}`);
   timer.forEach(function (el, i) {
     if (clickedSlider.className == el.className) {
@@ -171,7 +164,7 @@ function clearAllIntervals() {
   }
 }
 
-function setLastActiveRound(round) {
+function setLastActiveRound(round = pomodoroRound) {
   pauseRound.lastActiveRound = round;
   pauseRound.lastActiveRound.roundTime = round.roundTime;
 }
@@ -179,7 +172,6 @@ function setLastActiveRound(round) {
 document.addEventListener("pomodoroExpired", function (e) {
   setLastActiveRound(breakRound);
   activateRound(breakRound);
-
 }, false);
 
 document.addEventListener("breakExpired", function (e) {
