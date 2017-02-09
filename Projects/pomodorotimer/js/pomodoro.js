@@ -1,6 +1,6 @@
 "use strict";
 class Theme {
-  constructor(mainColor) {
+  constructor(mainColor, slidersState) {
     this.mainColor = mainColor;
   }
 
@@ -20,6 +20,7 @@ class Theme {
     pomodoroStylesheet.addRule(".btn-play:focus", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
   }
 }
+const timeManagement = $(".timerValues");
 const sliders = document.getElementsByClassName("sliders");
 const progressCircle = document.querySelector(".progressCircle");
 const timeLeftDisplay = document.querySelector(".timeLeftDisplay");
@@ -58,6 +59,7 @@ $(document).ready(function () {
       activateRound(pauseRound.lastActiveRound);
     } else {
       activateRound(pomodoroRound);
+      timeManagement.removeClass("enabled");
     }
     toggleActionButton(thisBtn);
   });
@@ -100,6 +102,7 @@ function activateRound(roundObject) {
   }
 
   function decreaseMinutesLeft() {
+
     if (Number(minutesLeft) >= 1 && secondsLeft == "00") {
       minutesLeft = minutesLeft - 1;
     }
@@ -113,7 +116,8 @@ function activateRound(roundObject) {
   }
 
   function checkTimeExpiration(expirationEvent) {
-    if (minutesLeft == "00" && secondsLeft == "00") {
+    const isRoundOver = minutesLeft == "00" && secondsLeft == "00";
+    if (isRoundOver) {
       clearInterval(minutesInterval);
       clearInterval(secondsInterval);
       disableDotAnimation();
@@ -127,27 +131,27 @@ function formatTime(minutes, seconds) {
       return "00";
     } else if (String(unit).length < 2) {
       return `0${unit}`;
-    }
-    return unit;
+    } return unit;
   });
   return `${timeUnits[0]}:${timeUnits[1]}`;
 }
-
+// zamień forEach na filter -> map
 function modifyTimeWithSlider(slider) {
-  const timer = Array.prototype.slice.call(this.parentNode.childNodes);
+  let timer = Array.prototype.slice.call(this.parentNode.childNodes);
   const clickedSlider = slider.target;
   let currentTime = document.querySelector(`.${timer[3].className}`);
-  timer.forEach(function (el, i) {
-    if (clickedSlider.className == el.className) {
-      if (i < 3) {
+  timer.forEach(function (slider, i) {
+    if (clickedSlider.className == slider.className && timeManagement.hasClass("enabled")) {
+      if (i < 3 && currentTime.innerHTML > 1) {
         currentTime.innerHTML = currentTime.innerHTML - 1;
-      } else {
+      } else if (i > 3) {
         currentTime.innerHTML = Number(currentTime.innerHTML) + 1;
       }
+      $(".timeLeftDisplay").text(formatTime(currentTime.innerHTML, null));
     }
   });
-  $(".timeLeftDisplay").text(formatTime(currentTime.innerHTML, null));
 }
+
 
 function toggleActionButton(btn) {
   if (btn.hasClass("btn-play")) {
@@ -163,7 +167,6 @@ function clearAllIntervals() {
     window.clearInterval(i);
   }
 }
-
 function setLastActiveRound(round = pomodoroRound) {
   pauseRound.lastActiveRound = round;
   pauseRound.lastActiveRound.roundTime = round.roundTime;
@@ -178,4 +181,6 @@ document.addEventListener("breakExpired", function (e) {
   setLastActiveRound(breakRound);
   defaultTheme.active();
   toggleActionButton($(".btn-warning"));
+  timeManagement.addClass("enabled");
+  $(".timeLeftDisplay").text(formatTime(currentTime.innerHTML, null));
 }, false);
