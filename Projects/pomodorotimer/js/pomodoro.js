@@ -11,7 +11,7 @@ class Theme {
       slider.style.backgroundColor = shadeColor(mainColor, 0.2);
     });
     pomodoroStylesheet.addRule(".sliders:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
-    progressCircle.style.borderColor = mainColor;
+    document.querySelector(".progressCircle").style.borderColor = mainColor;
     pomodoroStylesheet.addRule(".progressCircle:before", "background-color: " + mainColor);
     timeLeftDisplay.style.color = mainColor;
     document.querySelector(".buttons > button").style.backgroundColor = shadeColor(mainColor, 0.2);
@@ -22,7 +22,6 @@ class Theme {
 }
 const timeManagement = $(".timerValues");
 const sliders = document.getElementsByClassName("sliders");
-const progressCircle = document.querySelector(".progressCircle");
 const timeLeftDisplay = document.querySelector(".timeLeftDisplay");
 const pomodoroStylesheet = document.styleSheets[2];
 const shadeColor = function (color, percent) {
@@ -75,7 +74,7 @@ $(document).ready(function () {
     clearAllIntervals();
     activateRound.disableDotAnimation();
     toggleActionButton($(".btn-warning"));
-    $(".timeLeftDisplay").text(formatTime(pomodoroRound.roundTimeSelector.innerHTML, null));
+    updateTimeLeft(pomodoroRound.roundTimeSelector.innerHTML, null);
     timeManagement.addClass("enabled");
   })
 });
@@ -111,12 +110,12 @@ function activateRound(roundObject) {
     if (Number(minutesLeft) >= 1 && secondsLeft == "00") {
       minutesLeft = minutesLeft - 1;
     }
-    timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
+    updateTimeLeft(minutesLeft, secondsLeft);
   }
 
   function decreaseSecondsLeft() {
     secondsLeft = secondsLeft == "00" ? "59" : secondsLeft - 1;
-    timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
+    updateTimeLeft(minutesLeft, secondsLeft);
     checkTimeExpiration(roundExpirationEvent);
   }
 
@@ -153,7 +152,7 @@ function modifyTimeWithSlider(slider) {
       } else if (i > 3) {
         currentTime.innerHTML = Number(currentTime.innerHTML) + 1;
       }
-      $(".timeLeftDisplay").text(formatTime(currentTime.innerHTML, null));
+      updateTimeLeft(currentTime.innerHTML, null);
     }
   });
 }
@@ -167,6 +166,11 @@ function toggleActionButton(btn) {
     btn.html("<i class=\"fa fa-play\">");
   }
 }
+
+function updateTimeLeft(minutesLeft, secondsLeft) {
+  timeLeftDisplay.innerHTML = formatTime(minutesLeft, secondsLeft);
+}
+
 function clearAllIntervals() {
   for (let i = 0; i < 9999; i++) {
     window.clearInterval(i);
@@ -187,7 +191,7 @@ document.addEventListener("breakExpired", function (e) {
   defaultTheme.active();
   toggleActionButton($(".btn-warning"));
   timeManagement.addClass("enabled");
-  $(".timeLeftDisplay").text(formatTime(pomodoroRound.roundTimeSelector.innerHTML, null));
+  updateTimeLeft(pomodoroRound.roundTimeSelector.innerHTML, null);
 }, false);
 
 function playSound(filename){
