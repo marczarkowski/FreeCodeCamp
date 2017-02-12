@@ -10,14 +10,14 @@ class Theme {
     [].forEach.call(sliders, function (slider) {
       slider.style.backgroundColor = shadeColor(mainColor, 0.2);
     });
-    pomodoroStylesheet.addRule(".sliders:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
+    pomodoroStylesheet.insertRule(`.sliders:hover { background-color: ${shadeColor(mainColor, -0.1)} !important) }`, pomodoroStylesheet.cssRules.length);
     document.querySelector(".progressCircle").style.borderColor = mainColor;
-    pomodoroStylesheet.addRule(".progressCircle:before", "background-color: " + mainColor);
+    pomodoroStylesheet.insertRule(`.progressCircle:before { background-color: ${mainColor} }`, pomodoroStylesheet.cssRules.length);
     timeLeftDisplay.style.color = mainColor;
     document.querySelector(".buttons > button").style.backgroundColor = shadeColor(mainColor, 0.2);
     document.querySelector(".buttons > button").style.borderColor = shadeColor(mainColor, 0.2);
-    pomodoroStylesheet.addRule(".btn-play:hover", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
-    pomodoroStylesheet.addRule(".btn-play:focus", `background-color: ${shadeColor(mainColor, -0.1)} !important`);
+    pomodoroStylesheet.insertRule(`.btn-play:hover { background-color: ${shadeColor(mainColor, -0.1)} !important }`, pomodoroStylesheet.cssRules.length);
+    pomodoroStylesheet.insertRule(`.btn-play:focus { background-color: ${shadeColor(mainColor, -0.1)} !important }`, pomodoroStylesheet.cssRules.length);
   }
 }
 const timeManagement = $(".timerValues");
@@ -49,26 +49,30 @@ let pauseRound = {
 
 $(document).ready(function () {
   defaultTheme.active();
-  $(".timeLeftDisplay").text(formatTime(pomodoroRound.roundTimeSelector.innerHTML, null));
+  updateTimeLeft(pomodoroRound.roundTimeSelector.innerHTML, null);
+
   $(".sliders").click(modifyTimeWithSlider);
+
   $(".buttons").on("click", ".btn-play", function () {
     if ($(this).hasClass("afterPause")) {
       activateRound(pauseRound.lastActiveRound);
     } else {
       activateRound(pomodoroRound);
-      timeManagement.removeClass("enabled");
     }
+    timeManagement.removeClass("enabled");
     toggleActionButton($(this));
   });
+
   $(".buttons").on("click", ".btn-warning", function () {
     pauseRound.theme.active();
     clearAllIntervals();
     pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation-play-state: paused !important;
-                                              animation-play-state: paused !important; }`, pomodoroStylesheet.rules.length);
+                                              animation-play-state: paused !important; }`, pomodoroStylesheet.cssRules.length);
     $(this).addClass("afterPause");
     setLastActiveRound();
     toggleActionButton($(this));
   });
+
   $(".buttons").on("click", ".btn-danger", function () {
     defaultTheme.active();
     clearAllIntervals();
@@ -96,18 +100,18 @@ function activateRound(roundObject) {
 
   function enableDotAnimation() {
     pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation: single10anim 60s infinite linear !important; 
-                                              animation: single10anim 60s infinite linear !important; }`, pomodoroStylesheet.rules.length);
+                                              animation: single10anim 60s infinite linear !important; }`, pomodoroStylesheet.cssRules.length);
   }
 
   function disableDotAnimation() {
-    pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation: none !important; animation: none !important; }`, pomodoroStylesheet.rules.length);
+    pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation: none !important; animation: none !important; }`, pomodoroStylesheet.cssRules.length);
   }
 
   activateRound.disableDotAnimation = disableDotAnimation;
 
   function decreaseMinutesLeft() {
-
-    if (Number(minutesLeft) >= 1 && secondsLeft == "00") {
+    let isMinuteOver = Number(minutesLeft) >= 1 && secondsLeft == "00";
+    if (isMinuteOver) {
       minutesLeft = minutesLeft - 1;
     }
     updateTimeLeft(minutesLeft, secondsLeft);
@@ -140,7 +144,7 @@ function formatTime(minutes, seconds) {
   });
   return `${timeUnits[0]}:${timeUnits[1]}`;
 }
-// zamień forEach na filter -> map
+
 function modifyTimeWithSlider(slider) {
   let timer = Array.prototype.slice.call(this.parentNode.childNodes);
   const clickedSlider = slider.target;
@@ -193,7 +197,3 @@ document.addEventListener("breakExpired", function (e) {
   timeManagement.addClass("enabled");
   updateTimeLeft(pomodoroRound.roundTimeSelector.innerHTML, null);
 }, false);
-
-function playSound(filename){
-  document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
-}

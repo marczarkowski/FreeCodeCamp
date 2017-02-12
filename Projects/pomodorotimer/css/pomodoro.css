@@ -1,7 +1,7 @@
 html, body {
     background-color: #00BCD4;
     height: 100%;
-    width: 100%;
+    min-width: 445px;
 }
 
 .interface {
@@ -38,6 +38,7 @@ html, body {
     display: inline;
     position: relative;
     user-select: none;
+    -moz-user-select: none;
 }
 
 .pomodoroHeader, .pomodoroManagement {
@@ -89,8 +90,6 @@ html, body {
     border: 8px solid #00cfd4;
     border-radius: 50%;
     position: relative;
-    /*-webkit-animation: single10anim 60s infinite linear !important;*/
-    /*animation: single10anim 60s infinite linear !important;*/
 }
 .progressCircleNoAnimation {
     height: 270px;
