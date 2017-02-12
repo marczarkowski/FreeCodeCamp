@@ -20,7 +20,7 @@ class Theme {
     pomodoroStylesheet.insertRule(`.btn-play:focus { background-color: ${shadeColor(mainColor, -0.1)} !important }`, pomodoroStylesheet.cssRules.length);
   }
 }
-const timeManagement = $(".timerValues");
+const timeManagement = $(".timeManagement");
 const sliders = document.getElementsByClassName("sliders");
 const timeLeftDisplay = document.querySelector(".timeLeftDisplay");
 const pomodoroStylesheet = document.styleSheets[2];

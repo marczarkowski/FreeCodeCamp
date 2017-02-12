@@ -25,12 +25,12 @@ html, body {
     color: white;
 }
 
-.timerHeaders {
+.roundTimers {
     padding-top: 64px;
     font-size: 17px;
 }
 
-.timerValues {
+.timeManagement {
     font-size: 24px;
 }
 
