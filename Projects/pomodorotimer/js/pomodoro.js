@@ -1,6 +1,6 @@
 "use strict";
 class Theme {
-  constructor(mainColor, slidersState) {
+  constructor(mainColor) {
     this.mainColor = mainColor;
   }
 
@@ -50,10 +50,11 @@ let pauseRound = {
 $(document).ready(function () {
   defaultTheme.active();
   updateTimeLeft(pomodoroRound.roundTimeSelector.innerHTML, null);
+  const buttons = ".buttons";
 
   $(".sliders").click(modifyTimeWithSlider);
 
-  $(".buttons").on("click", ".btn-play", function () {
+  $(buttons).on("click", ".btn-play", function () {
     if ($(this).hasClass("afterPause")) {
       activateRound(pauseRound.lastActiveRound);
     } else {
@@ -63,7 +64,7 @@ $(document).ready(function () {
     toggleActionButton($(this));
   });
 
-  $(".buttons").on("click", ".btn-warning", function () {
+  $(buttons).on("click", ".btn-warning", function () {
     pauseRound.theme.active();
     clearAllIntervals();
     pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation-play-state: paused !important;
@@ -73,14 +74,14 @@ $(document).ready(function () {
     toggleActionButton($(this));
   });
 
-  $(".buttons").on("click", ".btn-danger", function () {
+  $(buttons).on("click", ".btn-danger", function () {
     defaultTheme.active();
     clearAllIntervals();
     activateRound.disableDotAnimation();
     toggleActionButton($(".btn-warning"));
     updateTimeLeft(pomodoroRound.roundTimeSelector.innerHTML, null);
     timeManagement.addClass("enabled");
-  })
+  });
 });
 
 function activateRound(roundObject) {
@@ -185,12 +186,12 @@ function setLastActiveRound(round = pomodoroRound) {
   pauseRound.lastActiveRound.roundTimeSelector = timeLeftDisplay;
 }
 
-document.addEventListener("pomodoroExpired", function (e) {
+document.addEventListener("pomodoroExpired", function () {
   setLastActiveRound(breakRound);
   activateRound(breakRound);
 }, false);
 
-document.addEventListener("breakExpired", function (e) {
+document.addEventListener("breakExpired", function () {
   setLastActiveRound();
   defaultTheme.active();
   toggleActionButton($(".btn-warning"));
