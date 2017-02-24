@@ -1,13 +1,21 @@
-"use strict";
+const timeManagement = $(".timeManagement");
+const sliders = document.getElementsByClassName("sliders");
+const timeLeftDisplay = document.querySelector(".timeLeftDisplay");
+const pomodoroStylesheet = document.styleSheets[2];
+const shadeColor = (color, percent) => {
+  const f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+  return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+};
+
 class Theme {
   constructor(mainColor) {
     this.mainColor = mainColor;
   }
 
   active() {
-    let mainColor = this.mainColor;
+    const mainColor = this.mainColor;
     document.body.style.backgroundColor = mainColor;
-    [].forEach.call(sliders, function (slider) {
+    const colorSliders = [].forEach.call(sliders, (slider) => {
       slider.style.backgroundColor = shadeColor(mainColor, 0.2);
     });
     pomodoroStylesheet.insertRule(`.sliders:hover { background-color: ${shadeColor(mainColor, -0.1)} !important) }`, pomodoroStylesheet.cssRules.length);
@@ -20,34 +28,28 @@ class Theme {
     pomodoroStylesheet.insertRule(`.btn-play:focus { background-color: ${shadeColor(mainColor, -0.1)} !important }`, pomodoroStylesheet.cssRules.length);
   }
 }
-const timeManagement = $(".timeManagement");
-const sliders = document.getElementsByClassName("sliders");
-const timeLeftDisplay = document.querySelector(".timeLeftDisplay");
-const pomodoroStylesheet = document.styleSheets[2];
-const shadeColor = function (color, percent) {
-  let f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
-  return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
-};
-const defaultTheme = new Theme("#4CAF50");
-
-const pomodoroRound = {
-  roundTimeSelector: document.querySelector(`.${Array.prototype.slice.call(sliders[0].parentNode.childNodes)[3].className}`),
-  event: new Event("pomodoroExpired"),
-  theme: new Theme("#FF5722")
-};
-const breakRound = {
-  roundTimeSelector: document.querySelector(`.${Array.prototype.slice.call(sliders[2].parentNode.childNodes)[3].className}`),
-  event: new Event("breakExpired"),
-  theme: new Theme("#00BCD4")
-};
-let pauseRound = {
-  roundTimeSelector: timeLeftDisplay,
-  event: new Event("pomodoroExpired"),
-  theme: new Theme("#BDBDBD"),
-  lastActiveRound: null
-};
 
 $(document).ready(function () {
+  const pomodoroRound = {
+    roundTimeSelector: document.querySelector(`.${Array.prototype.slice.call(sliders[0].parentNode.childNodes)[3].className}`),
+    event: new Event("pomodoroExpired"),
+    theme: new Theme("#FF5722")
+  };
+  const breakRound = {
+    roundTimeSelector: document.querySelector(`.${Array.prototype.slice.call(sliders[2].parentNode.childNodes)[3].className}`),
+    event: new Event("breakExpired"),
+    theme: new Theme("#00BCD4")
+  };
+  let pauseRound = {
+    roundTimeSelector: timeLeftDisplay,
+    event: new Event("pomodoroExpired"),
+    theme: new Theme("#BDBDBD"),
+    lastActiveRound: null
+  };
+
+
+  const defaultTheme = new Theme("#4CAF50");
+
   defaultTheme.active();
   updateTimeLeft(pomodoroRound.roundTimeSelector.innerHTML, null);
   const buttons = ".buttons";
