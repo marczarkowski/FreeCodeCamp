@@ -34,7 +34,7 @@ $(document).ready(() => {
 
   const pomodoroRound = prepareRoundObject("pomodoroTime", "#FF5722");
   const pauseRound = prepareRoundObject("timeLeftDisplay", "#BDBDBD");
-  const breakRound =  prepareRoundObject("breakTime", "#00BCD4", "breakExpired");
+  const breakRound = prepareRoundObject("breakTime", "#00BCD4", "breakExpired");
 
   const defaultTheme = new Theme("#4CAF50");
 
@@ -93,7 +93,7 @@ function prepareRoundObject(roundTimeSelector, mainColor, eventName = "pomodoroE
     event: new Event(eventName),
     theme: new Theme(mainColor),
     lastActiveRound: null,
-  }
+  };
 }
 
 function activateRound(roundObject) {
@@ -104,7 +104,7 @@ function activateRound(roundObject) {
   }
   let minutesLeft = roundTime.substring(0, 2);
   let secondsLeft = roundTime.substring(3);
-  let roundExpirationEvent = roundObject["event"];
+  let roundExpirationEvent = roundObject.event;
   decreaseMinutesLeft();
   decreaseSecondsLeft();
   enableDotAnimation();
@@ -117,15 +117,15 @@ function activateRound(roundObject) {
   }
 
   function disableDotAnimation() {
-    pomodoroStylesheet.insertRule(`.progressCircle { -webkit-animation: none !important; animation: none !important; }`, pomodoroStylesheet.cssRules.length);
+    pomodoroStylesheet.insertRule(".progressCircle { -webkit-animation: none !important; animation: none !important; }", pomodoroStylesheet.cssRules.length);
   }
 
   activateRound.disableDotAnimation = disableDotAnimation;
 
   function decreaseMinutesLeft() {
-    let isMinuteOver = Number(minutesLeft) >= 1 && secondsLeft == "00";
+    const isMinuteOver = Number(minutesLeft) >= 1 && secondsLeft == "00";
     if (isMinuteOver) {
-      minutesLeft = minutesLeft - 1;
+      minutesLeft -= 1;
     }
     updateTimeLeft(minutesLeft, secondsLeft);
   }
@@ -146,8 +146,9 @@ function activateRound(roundObject) {
     }
   }
 }
-function formatTime(minutes, seconds) {
-  let timeUnits = Array.prototype.slice.call(arguments).map((unit) => {
+
+function formatTime(...units) {
+  const timeUnits = units.map((unit) => {
     if (!unit) {
       return "00";
     } else if (String(unit).length < 2) {
@@ -159,9 +160,9 @@ function formatTime(minutes, seconds) {
 }
 
 function modifyTimeWithSlider(slider) {
-  let timer = Array.prototype.slice.call(this.parentNode.childNodes);
+  const timer = Array.prototype.slice.call(this.parentNode.childNodes);
   const clickedSlider = slider.target;
-  let currentTime = document.querySelector(`.${timer[3].className}`);
+  const currentTime = document.querySelector(`.${timer[3].className}`);
   timer.forEach(function (slider, i) {
     if (clickedSlider.className == slider.className && timeManagement.hasClass("enabled")) {
       if (i < 3 && currentTime.innerHTML > 1) {
@@ -189,7 +190,7 @@ function updateTimeLeft(minutesLeft, secondsLeft) {
 }
 
 function clearAllIntervals() {
-  for (let i = 0; i < 9999; i++) {
+  for (let i = 0; i < 9999; i += 1) {
     window.clearInterval(i);
   }
 }
@@ -197,5 +198,3 @@ function setLastActiveRound(pauseRoundObject, roundObject) {
   pauseRoundObject.lastActiveRound = jQuery.extend(true, {}, roundObject);
   pauseRoundObject.lastActiveRound.roundTimeSelector = timeLeftDisplay;
 }
-
-
