@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Official Vue Tutorial: Conditional Rendering</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    <template v-if="ok">
+        <h1 v-if="ok">Yes</h1>
+        <p>Vue is soooo coool!</p>
+    </template>
+    <h1 v-else>No</h1>
+    <div v-if="Math.random() > 0.5">Now you see me!</div>
+    <div v-else>Now you don't!</div>
+    <div v-if="type === 'A'">A</div>
+    <div v-else-if="type === 'B'">B</div>
+    <div v-else-if="type === 'C'">C</div>
+    <div v-else>Not A/B/C</div>
+
+</div>
+
+
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            ok: true,
+            type: 'A',
+        }
+    });
+
+
+</script>
+</body>
+</html>
