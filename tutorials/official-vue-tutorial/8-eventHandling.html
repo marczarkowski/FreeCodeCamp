@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Official Vue Tutorial: Event Handling</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+
+<div id="app">
+  <button v-on:click="counter += 1">Add1</button>
+  <p>The button above has been clicked {{ counter }} times </p>
+</div>
+
+<script>
+  let vm = new Vue({
+    el: '#app',
+    data: {
+      counter: 0,
+    }
+  });
+</script>
+
+</body>
+</html>
