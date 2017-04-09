@@ -157,3 +157,54 @@ odcień pomarańczowego użylibyśmy `rgb(255, 102, 0)`. Podobnie moglibyśmy od
 Kolory RGB mogą również zawierać kanał alpha (przezroczystość) za pomocą funkcji `rgba()`. Funkcja ta przyjmuje czwartą wartość,
 będącą numerem od `0` do `1`. `0` zapewnia kolor w pełni przezroczysty, przez co byłby niewidzialny, a `1` to kolor matowy.
 Wartości pomiędzy `0` i `1` decydują o stopniu przezroczystości.
+
+**Kolory HSL i HSLa**
+
+Wartości koloru HSL przedstawia się za pomocą funkcji `hsl()`. H - hue (odcień), S - saturation (nasycenie), 
+L - lightness (jasność).
+
+Pierwsza wartość, hue (odcień) to pozbawiona jednostki liczba od 0 do 360. Zakres wartości reprezentuje koło kolorów, a 
+wybrana wartość identyfikuje kąt koloru w tymże kole.
+
+Dwie kolejne wartości, saturation (nasycenie) oraz lightness (jasność) to wartości procentowe od 0 do 100%. Nasycenie decyduje
+o tym jak nasycona będzie wybrana barwa. 0 to szarość, a 100 to pełne nasycenie. Jasność decyduje jak ciemny lub jasny będzie
+kolor. 0 to kompletna czerń, a 100 to kompletna biel.
+
+Przedstawienie odcieia pomarańczy z poprzednich przykładów za pomocą HSL: `hsl(24, 100%, 50%)`. Kolor `maroon` oraz `yellow`
+również posiadają swoją reprezentację w HSL:
+```aidl
+// CSS
+.task {
+  background: hsl(0, 100%, 25%);
+}
+
+.count {
+  background: hsl(60, 100%, 50%);
+}
+```
+Kolory HSL również mogą zawierać czwarty kanał odpowiadający za przezroczystość. W tym celu należy użyć funkcji `hsla()`.
+
+##### Długości
+
+**Długości bezwzględne**
+
+To najprostsze reprezentacje długości, są sztywno związane z wielkościami fizycznymi takimi jak cal, centrymetr, milimetr.
+
+**Piksele**
+
+Piksel jest równy 1/96 cala, stąd 96 pikseli w jednym calu. Jest to wielkość sztywna, stąd niezapewnia zbyt dużej
+
+**Długości relatywne**
+
+Wartość długości relatywnej jest bezpośrednio związana z innym pomiarem.
+
+**Procenty**
+
+Procenty reprezentowane z notacją % są najpopularniejszą formą wartości relatywnej. Dzięki procentom możemy ustalać
+wielkość elementu w stosunku do kontenera. 
+
+**Em**
+
+Jest to wielkość relatywna zależna od wielkości czcionki. Jeżeli ustawilibyśmy wielkość czcionki na `14px`, a width
+na `5em` to otrzymalibyśmy `width` 70 pikseli. (14 * 5).
+
