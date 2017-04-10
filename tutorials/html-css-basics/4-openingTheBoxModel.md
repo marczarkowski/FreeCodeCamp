@@ -124,4 +124,60 @@ div {
 **Indywidualne ramki dla stron**
 
 Podobnie jak w przypadku `margin` oraz `border` możemy ograniczyć się do określenia ramki dla jednej strony elementu, 
-wykorzystując właściwości `border-top`, `border-right` itd.
+wykorzystując właściwości `border-top`, `border-right` itd. To nie wszystko, mamy nawet możliwość edytowania wyłącznie
+określonej wartości naszej ramki, np. `border-bottom-width`.
+
+**Promień ramki**
+
+Ta właściwość pozwala na zaokrąglenie rogów naszej ramki. Poprawnymi wartościami dla `border-radius` są jednostki długości,
+w tym procenty i piksele, które określaja promień, według którego zostaną zaokrąglone rogi. Podobnie jak w przypadku paddingu,
+podanie jednej wartości odniesie się do wszystkich czterech rogów, dwie wartości wpływają kolejno na `top-left/bottom-right`
+oraz `top-right/bottom-left`, cztery wartości dotyczą kolejno `top-left`, `top-right`, `bottom-right`, `bottom-left`.
+Możemy użyć rozszerzonej formy wskazując konkretny róg, np. `border-top-right-radius`.
+
+#### Rozmiar pudełka
+
+W CSS3 wprowadzono właściwość `box-sizing`, która może wpływać na sposób działania modelu pudełkowego i to w jaki sposób
+oblicza się rozmiar elementu. Właściwość akceptuje trzy główne wartości: `content-box`, `padding-box` oraz `border-box`.
+
+**Content box**
+
+Wartość `content-box` jest wartością domyślną, która odpowiada za mechanikę dodawania wszystkich właściwości pudełka.
+
+**Padding box**
+
+Wartość `padding-box` przekształca model pudełkowy umieszczając `padding` wewnątrz `width` i `height` elementu. Jeżeli
+ustawimy `width` na `400` pikseli oraz `padding` na `20` pikseli to ostateczny `width` nadal będzie wynosił `400` pikseli.
+Wraz z wzrostem `padding`'u zawartość elementu kurczy się proporcjonalnie, aby utrzymać całkowity `width` na określonym
+poziomie.
+
+Jeżeli dodamy `border` i `margin` to wartości zostaną dodane do `width` lub `height` w celu otrzymania pełnego rozmiaru.
+Jeżeli dodamy `border` o szerokości `10` pikseli oraz `padding` o wielkości `20` pikseli to ostateczny `width` wyniesie
+`420` pikseli.
+
+**Border box**
+
+Ostatnia wartość, `border-box` ma takie podobnie działanie jak `padding-box` jednakże do ostatecznej wartości włączamy
+również wielkość `border`. 
+```aidl
+// CSS
+div {
+  box-sizing: border-box;
+  width: 400px;
+  padding: 20px;
+  border: 10px solid red;
+}
+```
+
+**Wybierając rozmiar pudełka**
+
+Ogólnie rzecz biorąc najlepszym `box-sizing`'iem jest `border-box`. Znacznie ułatwia działania przy obliczaniu wielkości
+elementu. Dodatkowo, mieszanie jednostek długości również staje się dużo bardziej intuicyjne. Jeżeli chcemy, żeby nasze
+pudełko miało szerokość `40%`, a następnie dodamy `padding` o wielkości `20` pikseli oraz `border` o grubości `10` pikseli
+to nasz element nadal będzie zajmował `40%` dostępnego miejsca.
+
+
+#### Narzędzia developera (DevTools)
+
+
+
