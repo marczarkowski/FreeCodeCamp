@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Official Vue Tutorial: Computed Properties and Watchers</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>Original message: "{{ message }}"</p>
+    <p v-if="seen">Reversed message: "{{ reverseMessage() }}"</p>
+    <p>Date computed: {{ computedDate }}</p>
+    <p>Date invoked: {{ invokeDate() }}</p>
+</div>
+---
+<div id="app-2">
+    <p>{{ fullName }}</p>
+</div>
+
+<div id="app-3">
+    <p>{{ fullName }} </p>
+</div>
+
+<div id="watch-example">
+    <p>
+        Ask a yes/no question:
+        <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+    <img :src="answerGif" v-if="gifSeen"/>
+</div>
+
+<script>
+  let vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js',
+      date: Date.now(),
+      seen: true,
+    },
+    computed: {
+      reversedMessage() {
+        return this.message.split('').reverse().join('');
+      },
+      computedDate() {
+        return Date.now();
+      }
+    },
+    methods: {
+      reverseMessage() {
+        return this.message.split('').reverse().join('');
+      },
+      invokeDate() {
+        return Date.now();
+      }
+    }
+  });
+
+  console.log(vm.reversedMessage);
+  vm.message = 'Goodbye';
+  console.log(vm.reversedMessage);
+
+  // imperatywna alternatywa dla computed properties
+  let vm2 = new Vue({
+    el: '#app-2',
+    data: {
+      firstName: 'Foo',
+      lastName: 'Bar',
+      fullName: 'Foo Bar'
+    },
+    watch: {
+      firstName(val) {
+        this.fullName = `${val} ${this.lastName}`;
+      },
+      lastName(val) {
+        this.fullName = `${this.firstName} ${val}`;
+      }
+    }
+  });
+
+  // ta sama funkcjonalność uzyskana z pomocą computed properties
+  let vm3 = new Vue({
+    el: '#app-3',
+    data: {
+      firstName: 'Foo',
+      lastName: 'Bar',
+    },
+    computed: {
+      //
+      fullName: {
+        // getter
+        get() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+        // setter
+        set(newValue) {
+          var names = newValue.split(' ');
+          this.firstName = names[0];
+          this.lastName = names[names.length - 1];
+        }
+      }
+    }
+  })
+
+  let watchExampleVm = new Vue({
+    el: '#watch-example',
+    data: {
+      question: '',
+      answer: 'I cannot give you an answer until you ask a question!',
+      answerGif: 'https://yesno.wtf/assets/yes/1-af11222d8d4af90bdab8fc447c8cfebf.gif',
+      gifSeen: false,
+    },
+    watch: {
+      // kiedy dochodzi do zmiany pytania ta funkcja zostaje wywołana
+      question(newQuestion) {
+        this.answer = 'Waiting for you to stop typing...';
+        this.getAnswer()
+      }
+    },
+    methods: {
+      // funkcja _.debounce pochodzi z biblioteki lodash.
+      // pozwala na ograniczenie ilości drogich operacji.
+      // w tym przypadku ograniczamy ilość zapytań do api,
+      // oczekując na zakończenie zapisywania pytania
+      // przed rozpoczęciem zapytania ajax.
+      // docs: https://lodash.com/docs#debounce
+      getAnswer: _.debounce(
+        function() {
+          if (this.question.indexOf('?') === -1) {
+            this.answer = 'Questions usually contain a question mark. :-P';
+            return;
+          }
+          this.answer = 'Thinking...';
+          var vm = this;
+          axios.get('https://yesno.wtf/api')
+            .then(function (response) {
+              vm.answer = _.capitalize(response.data.answer);
+              vm.answerGif = response.data.image;
+              vm.gifSeen = true;
+            })
+            .catch(function (error) {
+              vm.answer = 'Error! Could not reach the API. ' + error
+            })
+        },
+        // delay w millisekundach od ostatniego wprowadzonego znaku
+        // przed wysłaniem zapytania
+        500
+      )
+    }
+  })
+</script>
+</body>
+</html>

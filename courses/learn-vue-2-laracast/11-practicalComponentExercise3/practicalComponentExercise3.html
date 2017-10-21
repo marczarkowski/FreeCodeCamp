@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Laracast Learn Vue 2: Practical Exercise 3 - Tabs</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css">
+  <style type="text/css">
+    body {
+      padding-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="root" class="container">
+    <tabs>
+      <tab name="About Us" :selected="true">
+        <h1>Here is the content for the about us tab.</h1>
+      </tab>
+      <tab name="About Our Culture">
+        <h1>Here is the content for the about our culture tab.</h1>
+      </tab>
+      <tab name="About Our Vision">
+        <h1>Here is the content for the about our vision tab.</h1>
+      </tab>
+      <tab name="About Our Other Things">
+        <h1>Here is the content for the about our other things tab.</h1>
+      </tab>
+    </tabs>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

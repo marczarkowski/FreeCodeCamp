@@ -1,0 +1,22 @@
+/* Dokończ media dla < 600 px */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  flex-wrap: wrap;
+}
+
+.box {
+  background-color: #cc0042;
+  flex: 1 0 250px;
+}
+
+.box.middle {
+  background-color: #b20039;
+}
+
+h3 {
+  font-size: 30px;
+  padding: 30px 10px;
+}
