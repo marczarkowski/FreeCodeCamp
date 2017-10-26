@@ -7,31 +7,41 @@
   width: 100%;
   height: 100vh;
   background: url(../img/main.jpg) no-repeat center center fixed;
-  color: white;
+  color: #FFF;
   display: flex;
   flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.logo {
+  margin-left: 2%;
+  font-size: 1.6em;
+}
+
+.nav-bar {
+  margin-right: 2%;
+  flex: 0 0 25%;
 }
 
 .nav-bar__list {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   list-style-type: none;
 }
 
 .nav-bar__item {
-  padding: 2%;
   align-self: center;
 }
 
-.nav-bar__item:first-of-type {
-  flex-basis: 70%;
-  margin-left: 1.5%;
-  font-size: 1.6em;
-}
-
 .nav-bar__item:last-of-type {
-  margin-right: 1.5%;
+  padding-right: 1.5%;
 }
 
 .welcome-message {
@@ -40,11 +50,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 3.5%;
+
+}
+
+.welcome-message__header, .welcome-message__description {
+  padding-bottom: 4.5%;
 }
 
 .welcome-message__header {
-  font-size: 3em;
+  font-size: 4.2em;
 }
 
 .welcome-message__description {
@@ -52,8 +66,22 @@
   text-align: center;
 }
 
-.welcome-message__btn {
-  flex-basis: 60%;
+.welcome-message__button {
+  width: 300px;
+  height: 72px;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: #0288d1;
+  border: none;
+  border-radius: 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-message__button:hover {
+  cursor: pointer;
 }
 
 
