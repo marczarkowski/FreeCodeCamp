@@ -6,52 +6,93 @@
 .landing-page {
   width: 100%;
   height: 100vh;
-  background: url(../img/main.jpg) no-repeat center center fixed;
+  background: url(../img/main.jpg) no-repeat center center;
+  background-size: cover;
   color: #FFF;
   display: flex;
   flex-direction: column;
 }
 
 .header {
-  margin-top: 2%;
+  padding: 60px 45px 0 45px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-family: "Open Sans", sans-serif;
+  animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadein { /* Mozilla */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadein { /* Chrome and Safari */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadein { /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .logo {
-  margin-left: 35px;
-  font-size: 1.6em;
+  font-size: 26px;
 }
 
-@media screen and (max-width: 830px) {
+@media screen and (max-width: 800px) {
   .header {
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
+    flex-direction: column;
+    align-items: center;
   }
-
-  .logo {
-    margin: 0;
-  }
-}
-
-.nav-bar {
-  line-height: 29px;
-  margin-right: 20px;
 }
 
 .nav-bar__list {
+  line-height: 30px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   list-style-type: none;
 }
 
 .nav-bar__item {
   align-self: center;
   margin: 0 15px;
+  font-size: 18px;
 }
+
+.nav-bar__item:first-of-type {
+  margin: 0 15px 0 0;
+}
+
+.nav-bar__item:last-of-type {
+  margin: 0 0 0 15px;
+}
+
 
 .welcome-message {
   flex-grow: 1;
@@ -59,11 +100,40 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: Quicksand, sans-serif;
+  animation: 1s slidefade 1s forwards;
+}
 
+@keyframes slidefade {
+  100% {
+    opacity: 1;
+    margin: 0;
+  }
+}
+
+@-moz-keyframes slidefade {
+  100% {
+    opacity: 1;
+    margin: 0;
+  }
+}
+
+@-webkit-keyframes slidefade {
+  100% {
+    opacity: 1;
+    margin: 0;
+  }
+}
+
+@-o-keyframes slidefade {
+  100% {
+    opacity: 1;
+    margin: 0;
+  }
 }
 
 .welcome-message__header, .welcome-message__description {
-  padding-bottom: 4.5%;
+  padding-bottom: 60px;
 }
 
 .welcome-message__header {
