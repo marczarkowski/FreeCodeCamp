@@ -3,18 +3,21 @@
   padding: 0;
 }
 
-.landing-page {
+.landing-section, .portfolio-section {
   width: 100%;
-  height: 100vh;
-  background: url(../img/main.jpg) no-repeat center center;
-  background-size: cover;
+  min-height: 100vh;
   color: #FFF;
   display: flex;
   flex-direction: column;
 }
 
+.landing-section {
+  background: url(../img/main.jpg) no-repeat center center;
+  background-size: cover
+}
+
 .header {
-  padding: 60px 45px 0 45px;
+  padding: 60px 45px 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -24,6 +27,12 @@
   -webkit-animation: fadein 2s;
   -o-animation: fadein 2s;
 }
+
+.logo {
+  font-size: 26px;
+}
+
+
 
 @keyframes fadein {
   from {
@@ -61,17 +70,6 @@
   }
 }
 
-.logo {
-  font-size: 26px;
-}
-
-@media screen and (max-width: 800px) {
-  .header {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
 .nav-bar__list {
   line-height: 30px;
   display: flex;
@@ -101,6 +99,8 @@
   justify-content: center;
   align-items: center;
   font-family: Quicksand, sans-serif;
+  opacity: 0;
+  margin-top: 100px;
   animation: 1s slidefade 1s forwards;
 }
 
@@ -137,12 +137,12 @@
 }
 
 .welcome-message__header {
-  font-size: 4.2em;
+  font-size: 64px;
   text-align: center;
 }
 
 .welcome-message__description {
-  font-size: 1.8em;
+  font-size: 32px;
   text-align: center;
 }
 
@@ -151,7 +151,7 @@
   height: 72px;
   color: #FFF;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
   background-color: #0288d1;
   border: none;
   border-radius: 8px;
@@ -164,6 +164,29 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 900px) {
+  .landing-section {
+    min-height: 600px;
+  }
 
+  .header {
+    padding: 30px 22.5px 0;
+  }
+
+  .welcome-message__header {
+    font-size: 48px;
+  }
+
+  .welcome-message__description {
+    font-size: 32px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 
 
