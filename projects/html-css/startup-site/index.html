@@ -11,7 +11,7 @@
 <body>
   <!-- Forked from a template on Tutorialzine: https://tutorialzine.com/2016/06/freebie-landing-page-template-with-flexbox -->
   <div class="landing-section">
-    <header class="header">
+    <header class="top-header">
       <h2 class="logo">
         Website Logo
       </h2>
@@ -25,30 +25,39 @@
         </ul>
       </nav>
     </header>
-    <section class="welcome-message">
-      <header class="welcome-message__header">
+    <section class="main-promo">
+      <header class="main-promo__header">
         Responsive FlexBox Template
       </header>
-      <p class="welcome-message__description">A freebie by Marcin Czarkowski.</p>
-      <button class="welcome-message__button">DOWNLOAD IT HERE</button>
+      <p class="main-promo__description">A freebie by Marcin Czarkowski.</p>
+      <button class="promo__button">DOWNLOAD IT HERE</button>
     </section>
   </div>
-  <div class="works-section">
-      <header>
-        <h2 class="works-section__header">
-          Some of our work
-        </h2>
-        <p class="works-section__description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices. Morbi vitae pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.
-        </p>
-      </header>
-      <hr class="works-section__divider">
-      <section class="gallery">
-        <img class="gallery__item" src="assets/img/mountain1.jpg" />
-        <img class="gallery__item" src="assets/img/mountain2.jpg" />
-        <img class="gallery__item" src="assets/img/mountain3.jpg" />
-        <img class="gallery__item" src="assets/img/mountain4.jpg" />
-      </section>
+  <div class="our-works">
+    <header class="works-header">
+      <h2 class="works-promo__header">
+        Some of our work
+      </h2>
+      <p class="works-promo__description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices. Morbi vitae
+        pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.
+      </p>
+    </header>
+    <hr class="divider">
+    <section class="gallery">
+      <div class="gallery__cell gallery__cell--large">
+        <img class="gallery__image" src="assets/img/mountain1.jpg"/>
+      </div>
+      <div class="gallery__cell gallery__cell--small">
+        <img class="gallery__image" src="assets/img/mountain3.jpg"/>
+      </div>
+      <div class="gallery__cell gallery__cell--large">
+        <img class="gallery__image" src="assets/img/mountain2.jpg"/>
+      </div>
+      <div class="gallery__cell gallery__cell--small">
+        <img class="gallery__image" src="assets/img/mountain4.jpg"/>
+      </div>
+    </section>
   </div>
 </body>
 </html>
