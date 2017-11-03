@@ -1,63 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mountain Travel</title>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mountain Travel</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-  <!-- Forked from a template on Tutorialzine: https://tutorialzine.com/2016/06/freebie-landing-page-template-with-flexbox -->
-  <div class="landing-section">
+<!-- Forked from a template on Tutorialzine: https://tutorialzine.com/2016/06/freebie-landing-page-template-with-flexbox -->
+<div class="landing-section">
     <header class="top-header">
-      <h2 class="logo">
-        Website Logo
-      </h2>
-      
-      <nav class="nav-bar">
-        <ul class="nav-bar__list">
-          <li class="nav-bar__item">Home</li>
-          <li class="nav-bar__item">Products</li>
-          <li class="nav-bar__item">About</li>
-          <li class="nav-bar__item">Contacts</li>
-        </ul>
-      </nav>
+        <h2 class="logo">
+            Website Logo
+        </h2>
+        <nav class="nav-bar">
+            <ul class="nav-bar__list">
+                <li class="nav-bar__item">Home</li>
+                <li class="nav-bar__item">Products</li>
+                <li class="nav-bar__item">About</li>
+                <li class="nav-bar__item">Contacts</li>
+            </ul>
+        </nav>
     </header>
     <section class="main-promo">
-      <header class="main-promo__header">
-        Responsive FlexBox Template
-      </header>
-      <p class="main-promo__description">A freebie by Marcin Czarkowski.</p>
-      <button class="promo__button">DOWNLOAD IT HERE</button>
+        <header class="main-promo__header">
+            Responsive FlexBox Template
+        </header>
+        <p class="main-promo__description">A freebie by Marcin Czarkowski.</p>
+        <button class="promo__button">DOWNLOAD IT HERE</button>
     </section>
-  </div>
-  <div class="our-works">
-    <header class="works-header">
-      <h2 class="works-promo__header">
-        Some of our work
-      </h2>
-      <p class="works-promo__description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices. Morbi vitae
-        pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.
-      </p>
+</div>
+<section class="our-work">
+    <header class="our-work-promo">
+        <h2 class="our-work-promo__header">
+            Some of our work
+        </h2>
+        <p class="our-work-promo__description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum
+            bibendum ultrices. Morbi vitae
+            pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.
+        </p>
     </header>
     <hr class="divider">
-    <section class="gallery">
-      <div class="gallery__cell gallery__cell--large">
-        <img class="gallery__image" src="assets/img/mountain1.jpg"/>
-      </div>
-      <div class="gallery__cell gallery__cell--small">
-        <img class="gallery__image" src="assets/img/mountain3.jpg"/>
-      </div>
-      <div class="gallery__cell gallery__cell--large">
-        <img class="gallery__image" src="assets/img/mountain2.jpg"/>
-      </div>
-      <div class="gallery__cell gallery__cell--small">
-        <img class="gallery__image" src="assets/img/mountain4.jpg"/>
-      </div>
+    <section>
+        <ul class="gallery-grid">
+            <li class="gallery-grid__cell gallery-grid__cell--large"
+                style="background-image: url('assets/img/mountain1.jpg')">
+            </li>
+            <li class="gallery-grid__cell gallery__cell--small"
+                style="background-image: url('assets/img/mountain3.jpg')">
+            </li>
+            <li class="gallery-grid__cell gallery-grid__cell--large"
+                style="background-image: url('assets/img/mountain2.jpg')">
+            </li>
+            <li class="gallery-grid__cell gallery__cell--small"
+                style="background-image: url('assets/img/mountain4.jpg')">
+            </li>
+        </ul>
     </section>
-  </div>
+</section>
 </body>
 </html>
