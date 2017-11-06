@@ -182,9 +182,15 @@
   flex-basis: 40%;
 }
 
+.grid__cell--even {
+  flex-basis: 33%;
+  height: inherit;
+}
+
 .features {
   min-height: 60vh;
   background-color: #f7f7f7;
+  font-family: "Open Sans", sans-serif;
 }
 
 .features .grid {
@@ -195,10 +201,20 @@
   text-align: center;
 }
 
-.grid__cell .fa {
+.grid__cell > .cell__icon {
   color: #0288D1;
   font-size: 50px;
 }
+
+.cell__title {
+  font-size: 20px;
+  margin: 18px 0;
+}
+
+.others {
+  background-color: #FFFFFF;
+}
+
 
 @media screen and (max-width: 1000px) {
   .top-header {
