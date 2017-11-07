@@ -6,12 +6,12 @@
   <title>Mountain Travel</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
   <script src="https://use.fontawesome.com/53d567831e.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
   <!-- Inspired by template on Tutorialzine: https://tutorialzine.com/2016/06/freebie-landing-page-template-with-flexbox -->
-  <section class="hero">
+  <section class="module module--full-height module--hero">
     <header class="top-header">
       <h2 class="logo">
         Website Logo
@@ -30,10 +30,10 @@
         Responsive FlexBox Template
       </header>
       <p class="hero-promo__description">A freebie by Marcin Czarkowski.</p>
-      <button class="hero-promo__button">DOWNLOAD IT HERE</button>
+      <button class="btn">Download it here</button>
     </section>
   </section>
-  <section class="our-work">
+  <section class="module module--column">
     <header class="section-promo">
       <h2 class="section-promo__header">
         Some of our work
@@ -60,7 +60,7 @@
         </li>
       </ul>
   </section>
-  <section class="features content-row">
+  <section class="module module--gray">
     <header class="section-promo">
       <h2 class="section-promo__header">
         Features and services
@@ -72,28 +72,28 @@
       </p>
     </header>
     <hr class="divider">
-      <ul class="grid">
-        <li class="grid__cell grid__cell--even">
-          <i class="fa fa-camera-retro cell__icon"></i>
+      <ul class="grid grid--spaced">
+        <li class="grid__cell grid__cell--one-third grid__cell--centered">
+          <i class="fa fa-camera-retro cell__icon cell__icon--blue "></i>
           <h4 class="cell__title">Photography</h4>
           <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae pulvinar velit.
           </p>
         </li>
-        <li class="grid__cell grid__cell--even">
-          <i class="fa fa-laptop cell__icon"></i>
+        <li class="grid__cell grid__cell--one-third grid__cell--centered">
+          <i class="fa fa-laptop cell__icon cell__icon--blue "></i>
           <h4 class="cell__title">Web Development</h4>
           <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae pulvinar velit.
           </p>
         </li>
-        <li class="grid__cell grid__cell--even">
-          <i class="fa fa-newspaper-o cell__icon"></i>
+        <li class="grid__cell grid__cell--one-third grid__cell--centered">
+          <i class="fa fa-newspaper-o cell__icon cell__icon--blue "></i>
           <h4 class="cell__title">Content editing</h4>
           <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae pulvinar velit.
           </p>
         </li>
       </ul>
   </section>
-  <section class="opinions">
+  <section class="module module--column ">
     <header class="section-promo">
       <h2 class="section-promo__header">
         What others say:
@@ -108,7 +108,7 @@
         <p class="quote__author">— Kevin Blake</p>
     </section>
   </section>
-  <section class="newsletter">
+  <section class="module module--gray">
     <header class="section-promo">
       <h2 class="section-promo__header">
         Join Our Newsletter

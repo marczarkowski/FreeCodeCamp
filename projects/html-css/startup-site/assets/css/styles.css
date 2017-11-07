@@ -4,21 +4,31 @@
   box-sizing: border-box;
 }
 
-.hero,
-.our-works,
-.opinions {
-  display: flex;
-  flex-flow: column;
+.module {
+  color: #414A4F;
+  padding: 120px 80px;
 }
 
-.hero, .our-works {
+.module--gray {
+  background-color: #F7F7F7;
+}
+
+.module--column {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.module--full-height {
   min-height: 100vh;
 }
 
-.hero {
+.module--hero {
   background: url(../img/main.jpg) no-repeat center center;
   background-size: cover;
-  color: #FFF;
+  color: #FFFFFF;
+  padding: 0;
 }
 
 .top-header {
@@ -58,7 +68,6 @@
   margin: 0 0 0 15px;
 }
 
-
 .hero-promo {
   flex-grow: 1;
   display: flex;
@@ -67,10 +76,9 @@
   align-items: center;
   font-family: Quicksand, sans-serif;
   opacity: 0;
-  margin-top: 100px;
   animation: 1s slidefade 1s forwards;
+  margin-top: 100px;
 }
-
 
 .hero-promo__header,
 .hero-promo__description {
@@ -87,34 +95,26 @@
   text-align: center;
 }
 
-.hero-promo__button {
+.btn {
   width: 300px;
   height: 72px;
-  color: #FFF;
-  font-weight: bold;
+  color: #FFFFFF;
+  font-weight: 800;
   font-size: 16px;
-  background-color: #0288d1;
+  background-color: #0288D1;
   border: none;
   border-radius: 8px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  text-transform: uppercase;
 }
 
-.hero-promo__button:hover {
+.btn:hover {
   cursor: pointer;
 }
 
-.our-work,
-.features,
-.opinions,
-.newsletter {
-  color: #414a4f;
-  padding: 120px 80px;
-}
-
-.section-promo,
-.quotes {
+.section-promo {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -166,32 +166,26 @@
   flex-basis: 40%;
 }
 
-.grid__cell--even {
+.grid__cell--one-third {
   flex-basis: 33%;
   height: inherit;
 }
 
-.features {
-  min-height: 60vh;
-  font-family: "Open Sans", sans-serif;
-}
 
-.features,
-.newsletter {
-  background-color: #f7f7f7;
-}
-
-.features .grid {
+.grid--spaced {
   justify-content: space-around;
 }
 
-.features .grid .grid__cell {
+.grid__cell--centered {
   text-align: center;
 }
 
-.grid__cell > .cell__icon {
-  color: #0288D1;
+.cell__icon {
   font-size: 50px;
+}
+
+.cell__icon--blue {
+  color: #0288D1;
 }
 
 .cell__title {
@@ -234,7 +228,7 @@
 }
 
 @media screen and (max-width: 800px) {
-  .hero {
+  .module--hero {
     min-height: 600px;
   }
 
