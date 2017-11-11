@@ -12,7 +12,7 @@
 <body>
   <!-- Inspired by template on Tutorialzine: https://tutorialzine.com/2016/06/freebie-landing-page-template-with-flexbox -->
   <section class="module module--full-height module--hero">
-    <header class="top-header">
+    <header class="main-header">
       <h2 class="logo">
         Website Logo
       </h2>
@@ -33,7 +33,7 @@
       <button class="btn">Download it here</button>
     </section>
   </section>
-  <section class="module module--column">
+  <section class="module module--centered">
     <header class="section-promo">
       <h2 class="section-promo__header">
         Some of our work
@@ -45,20 +45,20 @@
       </p>
     </header>
     <hr class="divider">
-      <ul class="grid">
-        <li class="grid__cell grid__cell--large"
-            style="background-image: url('assets/img/mountain1.jpg')">
-        </li>
-        <li class="grid__cell grid__cell--small"
-            style="background-image: url('assets/img/mountain3.jpg')">
-        </li>
-        <li class="grid__cell grid__cell--small"
-            style="background-image: url('assets/img/mountain4.jpg')">
-        </li>
-        <li class="grid__cell grid__cell--large"
-            style="background-image: url('assets/img/mountain2.jpg')">
-        </li>
-      </ul>
+    <ul class="grid">
+      <li class="grid__cell grid__cell--image grid__cell--image-large"
+          style="background-image: url('assets/img/mountain1.jpg')">
+      </li>
+      <li class="grid__cell grid__cell--image grid__cell--image-small"
+          style="background-image: url('assets/img/mountain3.jpg')">
+      </li>
+      <li class="grid__cell grid__cell--image grid__cell--image-small"
+          style="background-image: url('assets/img/mountain4.jpg')">
+      </li>
+      <li class="grid__cell grid__cell--image grid__cell--image-large"
+          style="background-image: url('assets/img/mountain2.jpg')">
+      </li>
+    </ul>
   </section>
   <section class="module module--gray">
     <header class="section-promo">
@@ -72,40 +72,46 @@
       </p>
     </header>
     <hr class="divider">
-      <ul class="grid grid--spaced">
-        <li class="grid__cell grid__cell--one-third grid__cell--centered">
-          <i class="fa fa-camera-retro cell__icon cell__icon--blue "></i>
-          <h4 class="cell__title">Photography</h4>
-          <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae pulvinar velit.
-          </p>
-        </li>
-        <li class="grid__cell grid__cell--one-third grid__cell--centered">
-          <i class="fa fa-laptop cell__icon cell__icon--blue "></i>
-          <h4 class="cell__title">Web Development</h4>
-          <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae pulvinar velit.
-          </p>
-        </li>
-        <li class="grid__cell grid__cell--one-third grid__cell--centered">
-          <i class="fa fa-newspaper-o cell__icon cell__icon--blue "></i>
-          <h4 class="cell__title">Content editing</h4>
-          <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices vitae pulvinar velit.
-          </p>
-        </li>
-      </ul>
+    <ul class="grid grid--spaced">
+      <li class="grid__cell grid__cell--one-third grid__cell--centered">
+        <i class="fa fa-camera-retro cell__icon cell__icon--blue "></i>
+        <h4 class="cell__title">Photography</h4>
+        <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum
+          bibendum ultrices vitae pulvinar velit.
+        </p>
+      </li>
+      <li class="grid__cell grid__cell--one-third grid__cell--centered">
+        <i class="fa fa-laptop cell__icon cell__icon--blue "></i>
+        <h4 class="cell__title">Web Development</h4>
+        <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum
+          bibendum ultrices vitae pulvinar velit.
+        </p>
+      </li>
+      <li class="grid__cell grid__cell--one-third grid__cell--centered">
+        <i class="fa fa-newspaper-o cell__icon cell__icon--blue "></i>
+        <h4 class="cell__title">Content editing</h4>
+        <p class="cell__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum
+          bibendum ultrices vitae pulvinar velit.
+        </p>
+      </li>
+    </ul>
   </section>
-  <section class="module module--column ">
+  <section class="module module--centered ">
     <header class="section-promo">
       <h2 class="section-promo__header">
         What others say:
       </h2>
     </header>
     <section class="quotes">
-        <p class="quote__content">Mauris sit amet mauris a arcu eleifend ultricies eget ut dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-        <p class="quote__author">— Patrick Farrell</p>
-        <p class="quote__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices. Morbi vitae pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.</p>
-        <p class="quote__author">— George Smith</p>
-        <p class="quote__content">Donec commodo dolor augue, vitae faucibus tortor tincidunt in. Aliquam vitae leo quis mi pulvinar ornare. Integer eu iaculis metus.</p>
-        <p class="quote__author">— Kevin Blake</p>
+      <p class="quote__content">Mauris sit amet mauris a arcu eleifend ultricies eget ut dolor. Class aptent taciti
+        sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+      <p class="quote__author">— Patrick Farrell</p>
+      <p class="quote__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum
+        bibendum ultrices. Morbi vitae pulvinar velit. Sed aliquam dictum sapien, id sagittis augue malesuada eu.</p>
+      <p class="quote__author">— George Smith</p>
+      <p class="quote__content">Donec commodo dolor augue, vitae faucibus tortor tincidunt in. Aliquam vitae leo quis mi
+        pulvinar ornare. Integer eu iaculis metus.</p>
+      <p class="quote__author">— Kevin Blake</p>
     </section>
   </section>
   <section class="module module--gray">
@@ -120,7 +126,27 @@
       </p>
     </header>
     <hr class="divider">
-    
+    <form class="newsletter-form">
+      <input class="newsletter-form__input" type="email" placeholder="Email">
+      <button class="btn">Subscribe now</button>
+    </form>
   </section>
+  <footer class="module main-footer">
+    <ul class="main-footer__social-icons grid grid--spaced">
+      <li class="grid__cell">
+        <i class="fa fa-twitter-square"></i>
+      </li>
+      <li class="grid__cell">
+        <i class="fa fa-facebook-square"></i>
+      </li>
+      <li class="grid__cell">
+        <i class="fa fa-github-square"></i>
+      </li>
+      <li class="grid__cell">
+        <i class="fa fa-linkedin-square"></i>
+      </li>
+    </ul>
+    <p class="main-footer__credits">Made by <a href="www.github.com/mkczarkowski">Marcin Czarkowski</a>. Inspired by <a href="https://demo.tutorialzine.com/2016/06/freebie-landing-page-template-with-flexbox/">Tutorialzine</a>.</p>
+  </footer>
 </body>
 </html>
