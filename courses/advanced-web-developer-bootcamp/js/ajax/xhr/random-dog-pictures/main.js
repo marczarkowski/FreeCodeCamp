@@ -32,7 +32,7 @@ window.addEventListener("load", () => {
 
       function handleError(e) {
         console.log(e.message);
-        setResponseStatus(false);
+        status.textContent = setResponseStatus(false);
       }
 
       function setResponseStatus(hasRequestSuccedeed)  {
