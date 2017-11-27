@@ -4,14 +4,18 @@ window.addEventListener("load", () => {
   const url = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes';
   const xhrBtn = document.querySelector('#xhr');
   const fetchBtn = document.querySelector('#fetch');
-  const jqueryBtn = document.querySelector('#jquery');
+  const jQueryBtn = document.querySelector('#jquery');
   const axiosBtn = document.querySelector('#axios');
   const quote = document.querySelector('#quote');
   const xhrHandler = getViaXhr(url);
   const fetchHandler = getViaFetch(url);
+  const jQueryHandler = getViaJquery(url);
+  const axiosHandler = getViaAxios(url);
 
   xhrBtn.addEventListener('click', xhrHandler);
   fetchBtn.addEventListener('click', fetchHandler);
+  jQueryBtn.addEventListener('click', jQueryHandler);
+  axiosBtn.addEventListener('click', axiosHandler);
 
   function getViaXhr(url) {
     return function () {
@@ -41,11 +45,11 @@ window.addEventListener("load", () => {
     return function() {
       fetch(url)
         .then(handleErrors)
-        .then(parseJSON)
+        .then(parseData)
         .then(updateQuote)
         .catch((err) => console.log(err));
 
-      function parseJSON(res) {
+      function parseData(res) {
         return res.json().then((data) => data[0]);
       }
 
@@ -59,6 +63,27 @@ window.addEventListener("load", () => {
           throw Error;
         }
       }
+    }
+  }
+
+  function getViaJquery(url) {
+    return function() {
+      $.getJSON(url)
+        .done(updateQuote)
+        .fail(err => console.log(err.status, err.responseText));
+    }
+  }
+
+  function getViaAxios(url) {
+    return function() {
+      axios.get(url)
+        .then(parseData)
+        .then(updateQuote)
+        .catch(err => console.log(err));
+    }
+
+    function parseData(res) {
+      return res.data[0];
     }
   }
 
