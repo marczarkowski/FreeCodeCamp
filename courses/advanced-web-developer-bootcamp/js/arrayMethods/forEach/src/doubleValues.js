@@ -8,10 +8,14 @@ Examples:
 */
 
 function doubleValues(arr) {
-  const result = [];
-  arr.forEach(el => result.push(el * 2));
+  if (Array.isArray(arr)) {
+    const result = [];
+    arr.forEach(el => result.push(el * 2));
 
-  return result;
+    return result;
+  }
+
+  throw new Error('Usage: doubleValues(arr). arr must be an Array');
 }
 
 module.exports = doubleValues;

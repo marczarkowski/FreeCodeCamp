@@ -5,6 +5,26 @@ describe('doubleValues', function() {
     expect(doubleValues).toEqual(jasmine.any(Function));
   });
 
+  it('accepts an array as parameter', function () {
+    const result = doubleValues([1, 2, 3]);
+
+    expect(result).toBeDefined();
+  });
+
+  it('throws an error if parameter is not an array', function () {
+    expect(function () {
+      doubleValues('not an array');
+    }).toThrowError();
+
+    expect(function () {
+      doubleValues(1);
+    }).toThrowError();
+
+    expect(function () {
+      doubleValues(undefined);
+    }).toThrowError();
+  });
+
   it('returns an array', function() {
     const result = doubleValues([1, 2, 3]);
 
