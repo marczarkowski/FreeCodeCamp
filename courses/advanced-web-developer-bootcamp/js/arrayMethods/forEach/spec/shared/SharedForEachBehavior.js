@@ -37,7 +37,9 @@ function sharedForEachBehavior(func) {
       }).toThrowError();
     });
 
-
+    it('returns an array', function () {
+      expect(func([])).toEqual(jasmine.any(Array));
+    });
   });
 }
 

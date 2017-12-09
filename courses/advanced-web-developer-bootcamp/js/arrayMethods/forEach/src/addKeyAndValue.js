@@ -8,17 +8,15 @@ Examples:
 
 */
 
-function addKeyAndValue(arr, key) {
-  // const isAString = el => typeof el === 'string';
-  //
-  if (Array.isArray(arr)) {
+function addKeyAndValue(arr, key, value) {
+  if (Array.isArray(arr) && typeof key === 'string' && typeof value === 'string') {
     const result = [];
-    //
-    //   arr.forEach((el) => {
-    //     const firstAndLast = `${el.substr(0, 1)}${el.substr(-1, 1)}`;
-    //     result.push(firstAndLast);
-    //   });
-    //
+
+    arr.forEach((obj, i) => {
+      result.push(obj);
+      result[i][key] = value;
+    });
+
     return result;
   }
 

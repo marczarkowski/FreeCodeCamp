@@ -2,48 +2,16 @@ const addKeyAndValue = require('../src/addKeyAndValue');
 const shared = require('./shared/SharedForEachBehavior');
 
 describe('addKeyAndValue', function () {
-  let spy = null;
 
-
-
-  it('returns an array', function () {
-    const result = addKeyAndValue([]);
-
-    expect(result).toEqual(jasmine.any(Array));
+  it('returns a the array passed to the function with the new key and value added for each variable', function () {
+    expect(addKeyAndValue(
+      [{name: 'Elie'}, {name: 'Tim'}, {name: 'Matt'}, {name: 'Colt'}],
+      'title', 'instructor'
+    )).toEqual([
+      {name: 'Elie', title: 'instructor'}, {name: 'Tim', title: 'instructor'},
+      {name: 'Matt', title: 'instructor'}, {name: 'Colt', title: 'instructor'}
+    ]);
   });
 
-
-  //
-  // it('throws an error if parameter is not an array', function () {
-  //   expect(function () {
-  //     showFirstAndLast('not an array');
-  //   }).toThrowError();
-  //
-  //   expect(function () {
-  //     showFirstAndLast(1);
-  //   }).toThrowError();
-  //
-  //   expect(function () {
-  //     showFirstAndLast(undefined);
-  //   }).toThrowError();
-  // });
-  //
-  // it('returns an array', function () {
-  //   const result = showFirstAndLast([]);
-  //
-  //   expect(result).toEqual(jasmine.any(Array));
-  // });
-  //
-  // it('returns a new array with only the first and last character of each string', function() {
-  //   const result1 = showFirstAndLast(['foo', 'bar', 'baz']);
-  //   const result2 = showFirstAndLast(['sort', 'yourself', 'out', 'bucko']);
-  //
-  //   expect(result1).toEqual(['fo', 'br', 'bz']);
-  //   expect(result2).toEqual(['st', 'yf', 'ot', 'bo']);
-  // });
-  function createInstance(...params) {
-    return addKeyAndValue(params);
-  }
-
-  shared(createInstance);
+  shared(addKeyAndValue);
 });
