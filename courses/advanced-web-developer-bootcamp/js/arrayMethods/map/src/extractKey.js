@@ -6,5 +6,7 @@ Examples:
 */
 
 function extractKey(arr, key){
-  return arr.map(el => el.key);
+  return arr.map(el => el[key]);
 }
+
+extractKey([{name: 'Elie'}, {name: 'Tim'}, {name: 'Matt'}, {name: 'Colt'}], 'name');
