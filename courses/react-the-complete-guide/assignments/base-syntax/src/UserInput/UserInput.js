@@ -9,14 +9,11 @@ const userInput = (props) => {
     margin: '0 0 10px 0',
   };
 
-
   return (
-    <div>
       <input
         style={style}
         onChange={props.change}
         value={props.value}/>
-    </div>
   );
 };
 
