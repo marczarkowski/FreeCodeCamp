@@ -17,6 +17,7 @@ class App extends Component {
         { id: '3', name: 'Michał', age: 25 },
       ],
       showPersons: false,
+      toggleClicked: 0,
     };
     console.log('[App.js] inside constructor');
   }
@@ -49,8 +50,11 @@ class App extends Component {
   };
 
   togglePersonsHandler = () => {
-    this.setState({
-      showPersons: !(this.state.showPersons),
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !(prevState.showPersons),
+        toggleClicked: prevState.toggleClicked + 1,
+      };
     });
   };
 
