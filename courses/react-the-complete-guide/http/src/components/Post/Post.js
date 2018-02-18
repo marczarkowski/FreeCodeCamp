@@ -1,14 +1,17 @@
-import React from 'react';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import "./Post.css";
 
-import './Post.css';
-
-const post = ({title, author, handleClick}) => (
+const post = ({ title, author, handleClick, match }) => {
+  console.log(match);
+  return (
     <article className="Post" onClick={handleClick}>
-        <h1>{title}</h1>
-        <div className="Info">
-            <div className="Author">{author}</div>
-        </div>
+      <h1>{title}</h1>
+      <div className="Info">
+        <div className="Author">{author}</div>
+      </div>
     </article>
-);
+  );
+};
 
-export default post;
+export default withRouter(post);

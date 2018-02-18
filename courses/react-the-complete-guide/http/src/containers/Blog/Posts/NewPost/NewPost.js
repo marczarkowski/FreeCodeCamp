@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 import "./NewPost.css";
@@ -9,8 +10,13 @@ class NewPost extends Component {
     this.state = {
       title: "",
       content: "",
-      author: "Max"
+      author: "Max",
+      hasNewPostBeenCreated: false
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props);
   }
 
   postDataHandler = () => {
@@ -20,14 +26,15 @@ class NewPost extends Component {
       author: this.state.author
     };
 
-    axios
-      .post("/posts", post)
-      .then(data => console.log(data));
+    axios.post("/posts", post).then(() => {
+      this.setState({ hasNewPostBeenCreated: true });
+    });
   };
 
   render() {
     return (
       <div className="NewPost">
+        {this.state.hasNewPostBeenCreated && <Redirect to="/posts" />}
         <h1>Add a Post</h1>
         <label>Title</label>
         <input

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { Route } from "react-router-dom";
 import axios from "../../../axios";
 
 import Post from "../../../components/Post/Post";
+import FullPost from "../Posts/FullPost/FullPost";
 
 class Posts extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class Posts extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     axios
       .get("/posts")
       .then(({ status, data: posts }) => {
@@ -26,8 +29,9 @@ class Posts extends Component {
       })
       .catch(err => console.log(err));
   }
+
   postSelectedHandler(id) {
-    this.setState({ selectedPostId: id });
+    this.props.history.push({ pathname: `/posts/${id}` });
   }
 
   render() {
@@ -40,26 +44,31 @@ class Posts extends Component {
       />
     ));
 
-    return <section className="Posts">{posts}</section>;
+    return (
+      <div>
+        <section className="Posts">{posts}</section>
+        <Route path={`${this.props.match.url}/:id`} component={FullPost} />
+      </div>
+    );
   }
 }
 
 export default Posts;
-{
-  /*<section>*/
-}
-{
-  /*<FullPost id={this.state.selectedPostId} />*/
-}
-{
-  /*</section>*/
-}
-{
-  /*<section>*/
-}
-{
-  /*<NewPost />*/
-}
-{
-  /*</section>*/
-}
+// {
+//   /*<section>*/
+// }
+// {
+//   /*<FullPost id={this.state.selectedPostId} />*/
+// }
+// {
+//   /*</section>*/
+// }
+// {
+//   /*<section>*/
+// }
+// {
+//   /*<NewPost />*/
+// }
+// {
+//   /*</section>*/
+// }

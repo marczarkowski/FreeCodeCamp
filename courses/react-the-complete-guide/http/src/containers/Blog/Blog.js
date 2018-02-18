@@ -1,35 +1,47 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route, NavLink, withRouter, Switch } from "react-router-dom";
 
 import Posts from "./Posts/Posts";
 import NewPost from "./Posts/NewPost/NewPost";
 import "./Blog.css";
 
 class Blog extends Component {
-  constructor() {
-    super(...arguments);
-  }
-
   render() {
+    console.log(this.props);
     return (
       <div className="Blog">
         <header>
           <nav>
             <ul>
               <li>
-                <Link to="/">Home</Link>
+                <NavLink to="/posts" exact>
+                  Posts
+                </NavLink>
               </li>
               <li>
-                <Link to="/new-post">New Post</Link>
+                <NavLink
+                  to={{
+                    pathname: `/new-post`
+                  }}
+                  activeClassName="my-active"
+                  activeStyle={{
+                    textDecoration: "underline"
+                  }}
+                  exact
+                >
+                  New Post
+                </NavLink>
               </li>
             </ul>
           </nav>
         </header>
-        <Route path="/" exact component={Posts} />
-        <Route path="/new-post" component={NewPost} />
+        <Switch>
+          <Route path="/new-post" component={NewPost} />
+          <Route path="/posts" component={Posts} />
+        </Switch>
       </div>
     );
   }
 }
 
-export default Blog;
+export default withRouter(Blog);
