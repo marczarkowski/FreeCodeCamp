@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 
 import Courses from "./containers/Courses/Courses";
 import Users from "./containers/Users/Users";
@@ -54,8 +54,10 @@ class App extends Component {
               </li>
             </ul>
           </nav>
-          <Route path="/users" component={Users} />
-          <Route path="/courses" component={Courses} />
+          <Switch>
+            <Route path="/users" component={Users} />
+            <Route path="/courses" component={Courses} />
+          </Switch>
         </div>
       </BrowserRouter>
     );
