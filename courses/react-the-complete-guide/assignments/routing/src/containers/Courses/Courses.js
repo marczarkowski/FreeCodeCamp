@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link, Route } from "react-router-dom";
+import React, {Component} from "react";
+import {Link, Route} from "react-router-dom";
 
 import Course from "../Course/Course";
 import "./Courses.css";
@@ -22,7 +22,6 @@ class Courses extends Component {
   }
 
   courseSelectedHandler = (id, title) => {
-    this.props.history.push(`/${this.props.match.url}/:${id}?title=${title}`);
     this.setState({ courseSelected: true });
   };
 
@@ -31,7 +30,7 @@ class Courses extends Component {
       <div>
         <h1>Amazing Udemy Courses</h1>
         <section className="Courses">
-          {!this.state.courseSelected &&
+          {
             this.state.courses.map(course => {
               return (
                 <Link
@@ -48,12 +47,12 @@ class Courses extends Component {
                 </Link>
               );
             })}
-          <Route
-            path={`${this.props.match.url}/:id`}
-            component={Course}
-            exact
-          />
         </section>
+        <Route
+          path={`${this.props.match.url}/:id`}
+          component={Course}
+          exact
+        />
       </div>
     );
   }
