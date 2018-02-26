@@ -11,18 +11,6 @@ class Courses extends Component {
       { id: 2, title: "Vue - The Complete Guide" },
       { id: 3, title: "PWA - The Complete Guide" }
     ],
-    courseSelected: false
-  };
-
-  componentWillReceiveProps({ location: { pathname: nextPath } }) {
-    const { pathname: currentPath } = this.props.location;
-    if (currentPath.length > nextPath.length) {
-      this.setState({ courseSelected: false });
-    }
-  }
-
-  courseSelectedHandler = (id, title) => {
-    this.setState({ courseSelected: true });
   };
 
   render() {
@@ -38,9 +26,6 @@ class Courses extends Component {
                     pathname: `/courses/${course.id}`,
                     search: `?title=${course.title}`
                   }}
-                  onClick={() =>
-                    this.courseSelectedHandler(course.id, course.title)
-                  }
                   key={course.id}
                 >
                   <article className="Course">{course.title}</article>
