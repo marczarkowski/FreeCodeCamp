@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 class Course extends Component {
   render() {
     const { id } = { ...this.props.match.params };
-    console.log(this.props);
     const searchParams = new URLSearchParams(this.props.location.search);
     let title;
     for (let param of searchParams.entries()) {
